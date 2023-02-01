@@ -4,3 +4,13 @@
   --warn-color: #FB4C4C;
   --white: #fff;
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  color: var(--custom-black)
+}
+
+a {
+  text-decoration: none;
+}
