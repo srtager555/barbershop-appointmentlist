@@ -1,4 +1,4 @@
-{
+module.exports = {
   "--print-width": 120,
   "--tab-width": 4,
   "--use-tabs": true
