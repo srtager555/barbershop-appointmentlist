@@ -20,18 +20,12 @@
 
   .social-networks {
     display: flex;
+    justify-content: space-between;
     position: absolute;
     left: 50%;
     bottom: 6px;
+    width: 250px;
     transform: translateX(-50%);
-
-    a {
-      display: inline-block;
-    }
-
-    a:nth-child(1) {
-      margin-right: 75px;
-    }
   }
 }
 
