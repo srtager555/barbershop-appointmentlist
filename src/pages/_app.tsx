@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Prata } from "@next/font/google";
 import { Background } from "src/common/background";
+import { Navbar } from "src/common/navbar";
 
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<title>Barberia Jossiel</title>
 			</Head>
 			<Background />
+			<Navbar />
 			<main className={prata.className}>
 				<Component {...pageProps} />
 			</main>
