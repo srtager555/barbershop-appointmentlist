@@ -6,9 +6,6 @@ import styles from "@styles/Home.module.scss";
 
 const Home: NextPage = () => (
 	<div className={styles.container}>
-		<div className={styles["container-logo"]}>
-			<Logo />
-		</div>
 		<div className={styles["container-content"]}>
 			<h1 className={styles.title}>Barberia Jossiel</h1>
 			<Link href="/citas" className={styles["circle-link"]}>
