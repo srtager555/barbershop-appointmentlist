@@ -1,8 +1,11 @@
 import Wl from "wrapping-letters-react";
+import { Noto_Sans_Display } from "@next/font/google";
 
 import { ActiveLink } from "@common/ActiveLink";
 
 import styles from "@styles/navbarComponents/AppointmentNav.module.scss";
+
+const NotoSansDisplay = Noto_Sans_Display({ subsets: ["latin"] })
 
 export const AppointmentNav = () => {
 	return (
@@ -13,18 +16,18 @@ export const AppointmentNav = () => {
 				<span className={styles.line}></span>
 				<ActiveLink href="/citas/manana">Mañana</ActiveLink>
 			</div>
-			<div className="state-poster">
-				<div className="state">
-					<span>Esta abierto</span>
+			<div className={styles["state-poster"]}>
+				<div className={styles.state}>
+					<span className={NotoSansDisplay.className}>✂️ ¡Jossiel esta cortando! 💈</span>
 				</div>
-				<div className="barber-lantern">
+				<div className={styles["barber-lantern"]}>
 					<Wl
 						text="ioioioioioioio"
 						textOptions={{
-							ClassToAdd: "lantern-bar",
+							ClassToAdd: styles["lantern-bar"],
 							SelectClass: {
 								wordToSearch: ["o", "i"],
-								classToAdd: ["red", "blue"],
+								classToAdd: [styles.red, styles.blue],
 							},
 						}}
 					/>
