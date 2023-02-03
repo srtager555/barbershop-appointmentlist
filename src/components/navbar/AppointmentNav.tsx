@@ -6,12 +6,12 @@ import styles from "@styles/navbarComponents/AppointmentNav.module.scss";
 
 export const AppointmentNav = () => {
 	return (
-		<>
-			<h2>Reservas</h2>
-			<div className="appointment-day">
-				<ActiveLink href="citas/">Hoy</ActiveLink>
-				<span className="line"></span>
-				<ActiveLink href="citas/">Mañana</ActiveLink>
+		<div className={styles.container}>
+			<h2 className={styles.title}>Reservas</h2>
+			<div className={styles["appointment-day"]}>
+				<ActiveLink href="/citas">Hoy</ActiveLink>
+				<span className={styles.line}></span>
+				<ActiveLink href="/citas/manana">Mañana</ActiveLink>
 			</div>
 			<div className="state-poster">
 				<div className="state">
@@ -30,6 +30,6 @@ export const AppointmentNav = () => {
 					/>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
