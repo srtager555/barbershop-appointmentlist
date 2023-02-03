@@ -1,7 +1,12 @@
-import { Logo } from "src/common/logo"
+import WL from "wrapping-letters-react"
+
+const structure = ({ letter }) => ( <p>{letter}</p> )
 
 export default function Citas() {
   return (
-    <span>Hola</span>
+    <WL 
+      text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" 
+      structure={structure} 
+    />
   )
 }
