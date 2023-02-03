@@ -6,7 +6,7 @@
   overflow: hidden;
 
   .title {
-    font-size: 32px;
+    font-size: 2em;
   }
 
   .appointment-day {
@@ -15,7 +15,7 @@
     margin-top: 15px;
 
     a {
-      font-size: 26px;
+      font-size: 1.65em;
     }
 
     .line {
@@ -41,6 +41,7 @@
       display: flex;
       justify-content: center;
       width: 70%;
+      font-size: 0.9em;
       padding-top: 6px;
       padding-bottom: 6px;
       border-radius: 10px;
@@ -50,30 +51,46 @@
     }
 
     .barber-lantern {
+      position: relative;
       width: 100%;
-      height: 44px;
+      height: 35px;
       background-color: #fff;
-      border-radius: 16px;
+      border-radius: 10px;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.10);
       margin-bottom: 10px;
       overflow: hidden;
-      white-space: nowrap;
+      
+      .lantern-slider {
+        animation: lantern infinite linear 10s;
+        white-space: nowrap;
+      
+        .lantern-bar {
+          display: inline-block;
+          height: 260px;
+          width: 27px;
+          margin-right: 35px;
+          background-color: #ddd;
+          transform: translateY(-50%) rotate(-20deg);
 
-      .lantern-bar {
-        display: inline-block;
-        height: 260px;
-        width: 27px;
-        margin-right: 35px;
-        background-color: #ddd;
-        transform: translateY(-50%) rotate(-20deg);
-
-        &.red {
-          background-color: #FB4C4C;
-        }
-        &.blue {
-          background-color: #345EF2;
+          &.red {
+            background-color: #FB4C4C;
+          }
+          &.blue {
+            background-color: #345EF2;
+          }
         }
       }
     }
+  }
+}
+
+@keyframes lantern {
+  0% {
+    position: absolute;
+    left: 0%;
+  }
+  100% {
+    position: absolute;
+    left: -499px;
   }
 }

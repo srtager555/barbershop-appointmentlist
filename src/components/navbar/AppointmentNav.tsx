@@ -21,16 +21,18 @@ export const AppointmentNav = () => {
 					<span className={NotoSansDisplay.className}>✂️ ¡Jossiel esta cortando! 💈</span>
 				</div>
 				<div className={styles["barber-lantern"]}>
-					<Wl
-						text="ioioioioioioio"
-						textOptions={{
-							ClassToAdd: styles["lantern-bar"],
-							SelectClass: {
-								wordToSearch: ["o", "i"],
-								classToAdd: [styles.red, styles.blue],
-							},
-						}}
-					/>
+          <div className={styles["lantern-slider"]}>
+            <Wl
+              text="ioioioioioioio"
+              textOptions={{
+                ClassToAdd: styles["lantern-bar"],
+                SelectClass: {
+                  wordToSearch: ["o", "i"],
+                  classToAdd: [styles.red, styles.blue],
+                },
+              }}
+            />
+          </div>
 				</div>
 			</div>
 		</div>
