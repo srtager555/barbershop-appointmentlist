@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { Prata } from "@next/font/google";
 
 import { Logo } from "./logo";
 import { AppointmentNav } from "@components/navbar/AppointmentNav";
@@ -11,6 +12,8 @@ interface ComponentsList {
 	navClass: string;
 	component: () => JSX.Element;
 }
+
+const prata = Prata({ preload: true, weight: "400", subsets: ["latin"] });
 
 export function Navbar() {
 	const router = useRouter();
@@ -36,7 +39,7 @@ export function Navbar() {
 	}, [router.asPath]);
 
 	return (
-		<nav className={`${styles.container} ${customClass}`}>
+		<nav className={`${prata.className} ${styles.container} ${customClass}`}>
 			<Logo />
 			<div className={styles["custom-content"]}>{Nav.component()}</div>
 		</nav>
