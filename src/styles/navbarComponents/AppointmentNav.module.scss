@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+
+  .title {
+    font-size: 32px;
+  }
+
+  .appointment-day {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+
+    a {
+      font-size: 26px;
+    }
+
+    .line {
+      display: inline-block;
+      width: 75px;
+      height: 1px;
+      background-color: var(--custom-black);
+      margin-left: 18px;
+      margin-right: 18px;
+    }
+  }
+}
