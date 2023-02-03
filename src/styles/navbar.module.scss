@@ -6,7 +6,12 @@
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+  max-width: 450px;
   transition: all 2s ease-in-out;
+
+  .custom-content {
+    width: 100%;
+  }
 
   &.start {
     top: 46%
