@@ -4,8 +4,7 @@ import { MouseEvent, ReactElement } from "react";
 export function ActiveLink({ children, href }: { href: string; children: ReactElement | string }) {
 	const router = useRouter();
 	const style = {
-		marginRight: 10,
-		color: router.asPath === href ? "red" : "black",
+		color: router.asPath === href ? "#ad6060" : "inherit",
 	};
 
 	const handleClick = (e: MouseEvent) => {
