@@ -7,6 +7,13 @@
 
   .title {
     font-size: 2em;
+    height: 0px;
+    transition: 200ms ease-in;
+    overflow: hidden;
+
+    .show {
+      height: 44px;
+    }
   }
 
   .appointment-day {
