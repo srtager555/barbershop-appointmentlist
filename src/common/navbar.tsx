@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { Logo } from "./logo";
-import { ActiveLink } from "./ActiveLink";
+import { AppointmentNav } from "@components/navbar/AppointmentNav";
 
 import styles from "@styles/navbar.module.scss";
 
@@ -20,7 +20,7 @@ export function Navbar() {
 
 	useEffect(() => {
 		const content: Array<ComponentsList> = [
-			{ path: "/citas", navClass: styles.apointments, component: AppointmentContent },
+			{ path: "/citas", navClass: styles.apointments, component: AppointmentNav },
 			{ path: "/", navClass: styles.start, component: unClasico },
 		];
 
@@ -38,22 +38,9 @@ export function Navbar() {
 	return (
 		<nav className={`${styles.container} ${customClass}`}>
 			<Logo />
-			<div className={`custom-content`}>{Nav.component()}</div>
+			<div className={styles["custom-content"]}>{Nav.component()}</div>
 		</nav>
 	);
 }
-
-const AppointmentContent = () => {
-	return (
-		<>
-			<h2>Reservas</h2>
-			<div className="appointment-day">
-				<ActiveLink href="citas/">Hoy</ActiveLink>
-				<span className="line"></span>
-				<ActiveLink href="citas/">Mañana</ActiveLink>
-			</div>
-		</>
-	);
-};
 
 const unClasico = () => <span></span>;
