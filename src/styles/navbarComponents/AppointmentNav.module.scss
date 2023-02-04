@@ -11,7 +11,7 @@
     transition: 200ms ease-in;
     overflow: hidden;
 
-    .show {
+    &.show {
       height: 44px;
     }
   }
@@ -19,7 +19,10 @@
   .appointment-day {
     display: flex;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 0px;
+    height: 0px;
+    overflow: hidden;
+    transition: all 500ms ease-in-out;
 
     a {
       font-size: 1.65em;
@@ -32,6 +35,11 @@
       background-color: var(--custom-black);
       margin-left: 18px;
       margin-right: 18px;
+    }
+
+    &.show {
+      margin-top: 15px;
+      height: 35px;
     }
   }
 

@@ -15,11 +15,10 @@ export const AppointmentNav = ({
 	showTitle: boolean;
 	scrollDirection: boolean;
 }) => {
-	console.log(showTitle)
 	return (
 		<div className={styles.container}>
 			<h2 className={`${styles.title} ${showTitle ? styles.show : ""}`}>Reservas</h2>
-			<div className={styles["appointment-day"]}>
+			<div className={`${styles["appointment-day"]} ${scrollDirection ? styles.show : ""}`}>
 				<ActiveLink href="/citas">Hoy</ActiveLink>
 				<span className={styles.line}></span>
 				<ActiveLink href="/citas/manana">Mañana</ActiveLink>
