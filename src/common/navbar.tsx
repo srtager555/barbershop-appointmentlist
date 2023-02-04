@@ -31,7 +31,11 @@ export function Navbar() {
 		};
 
 		const handleScrollDirection = () => {
-			if (lastScrollPosition < window.scrollY) {
+			if ( window.scrollY <= 0) {
+				setScrollDirection(true);
+				setLastScrollPosition(window.scrollY);
+			}
+			else if (lastScrollPosition < window.scrollY) {
 				setScrollDirection(false);
 				setLastScrollPosition(window.scrollY);
 			} else {
