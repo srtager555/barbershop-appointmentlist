@@ -17,29 +17,45 @@ const prata = Prata({ preload: true, weight: "400", subsets: ["latin"] });
 
 export function Navbar() {
 	const router = useRouter();
-	
+
 	const [customClass, setCustomClass] = useState(styles.start);
 	const [Nav, setNav] = useState<{ component: () => JSX.Element }>({ component: unClasico });
-	const [showTitle, setShowTitle] = useState(true)
-	const [scrollDirection, setScrollDirection] = useState(true)
-	
-	
+	const [showTitle, setShowTitle] = useState(true);
+	const [scrollDirection, setScrollDirection] = useState(true);
+	const [lastScrollPosition, setLastScrollPosition] = useState(0);
+
 	useEffect(() => {
 		const handleTitleChecker = () => {
-			if (window.screenY < 100) setShowTitle(true)
-			else setShowTitle(false)
-		}
+			if (window.scrollY <= 0) setShowTitle(true);
+			else setShowTitle(false);
+		};
 
-		window.addEventListener("scroll", handleTitleChecker)
+		const handleScrollDirection = () => {
+			if (lastScrollPosition < window.scrollY) {
+				setScrollDirection(false);
+				setLastScrollPosition(window.scrollY);
+			} else {
+				setScrollDirection(true);
+				setLastScrollPosition(window.scrollY);
+			}
+		};
+
+		window.addEventListener("scroll", handleTitleChecker);
+		window.addEventListener("scroll", handleScrollDirection);
 
 		return () => {
-			window.removeEventListener("scroll", handleTitleChecker)
-		}
-	}, [])
+			window.removeEventListener("scroll", handleTitleChecker);
+			window.removeEventListener("scroll", handleScrollDirection);
+		};
+	}, [lastScrollPosition]);
 
 	useEffect(() => {
 		const content: Array<ComponentsList> = [
-			{ path: "/citas", navClass: styles.apointments, component: () => AppointmentNav({ showTitle, scrollDirection }) },
+			{
+				path: "/citas",
+				navClass: styles.apointments,
+				component: () => AppointmentNav({ showTitle, scrollDirection }),
+			},
 			{ path: "/", navClass: styles.start, component: unClasico },
 		];
 
@@ -52,7 +68,7 @@ export function Navbar() {
 			setNav({ component: unClasico });
 			setCustomClass("");
 		}
-	}, [router.asPath]);
+	}, [router.asPath, scrollDirection, showTitle]);
 
 	return (
 		<nav className={`${prata.className} ${styles.container} ${customClass}`}>
