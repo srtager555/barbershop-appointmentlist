@@ -1,4 +1,3 @@
-import { Logo } from "src/common/logo";
 import Link from "next/link";
 import type { NextPage } from "next";
 

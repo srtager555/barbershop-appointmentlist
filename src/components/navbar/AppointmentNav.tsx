@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Wl from "wrapping-letters-react";
 import { Noto_Sans_Display } from "@next/font/google";
 
