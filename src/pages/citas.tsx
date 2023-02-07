@@ -1,14 +1,25 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 
-import { useState } from "react";
-import { NextPage } from "next";
+import { useState, useEffect } from "react";
+import excuteQuery from "src/ddbb";
+import { GetServerSideProps, NextPage } from "next";
 import styles from "@styles/citas.module.scss";
 
 const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
-const Citas: NextPage = () => {
-	const [message, setMessage] = useState("")
+export const getServerSideProps: GetServerSideProps = async () => {
+	let data = await excuteQuery({ query: "SELECT * FROM sql10595855.users;" }).then(
+		(data: object) => JSON.stringify(data)
+	);
+
+	return {
+		props: { data },
+	};
+};
+
+const Citas: NextPage<{ data: string }> = ({ data }) => {
+	const [message, setMessage] = useState("");
 	const stateStyles = `${notoI.className} ${styles.state}`;
 
 	const time = [
@@ -34,6 +45,12 @@ const Citas: NextPage = () => {
 		"7'30",
 		"8'00",
 	];
+
+	useEffect(() => {
+		const DATA: userDDBBResult = JSON.parse(data);
+
+		console.log(DATA.rows);
+	}, [data]);
 
 	//  I need improved this jsx logic, but first I will end the styles
 	return (
