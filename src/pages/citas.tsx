@@ -1,14 +1,15 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 
+import { useState } from "react";
 import { NextPage } from "next";
-
 import styles from "@styles/citas.module.scss";
 
-const noto = m({ weight: ["400"], subsets: ["latin"] })
-const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] })
+const noto = m({ weight: ["400"], subsets: ["latin"] });
+const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
 const Citas: NextPage = () => {
-  const stateStyles = `${notoI.className} ${styles.state}`
+	const [message, setMessage] = useState("")
+	const stateStyles = `${notoI.className} ${styles.state}`;
 
 	const time = [
 		"9'00",
@@ -47,8 +48,8 @@ const Citas: NextPage = () => {
 								className={`${styles["appointment-btn"]} ${styles.user}`}
 							>
 								<span className={styles.time}>{time}</span>
-                <span className={styles.line}></span>
-                <span className={stateStyles}>cancelar reserva</span>
+								<span className={styles.line}></span>
+								<span className={stateStyles}>cancelar reserva</span>
 							</button>
 						);
 
@@ -59,9 +60,9 @@ const Citas: NextPage = () => {
 								key={`${index} - ${time}`}
 								className={`${styles["appointment-btn"]} ${styles.close}`}
 							>
-                <span className={styles.time}>{time}</span>
-                <span className={styles.line}></span>
-                <span className={stateStyles}>PUERTAS CERRADAS</span>
+								<span className={styles.time}>{time}</span>
+								<span className={styles.line}></span>
+								<span className={stateStyles}>PUERTAS CERRADAS</span>
 							</button>
 						);
 
@@ -78,8 +79,8 @@ const Citas: NextPage = () => {
 								className={`${styles["appointment-btn"]} ${styles["reserved-appointment"]}`}
 							>
 								<span className={styles.time}>{time}</span>
-                <span className={styles.line}></span>
-                <span className={stateStyles}>reservado</span>
+								<span className={styles.line}></span>
+								<span className={stateStyles}>reservado</span>
 							</button>
 						);
 
@@ -90,8 +91,10 @@ const Citas: NextPage = () => {
 								className={styles["appointment-btn"]}
 							>
 								<span className={styles.time}>{time}</span>
-                <span className={styles.line}></span>
-                <span className={`${styles.state} ${noto.className}`}>reservar puesto</span>
+								<span className={styles.line}></span>
+								<span className={`${styles.state} ${noto.className}`}>
+									reservar puesto
+								</span>
 							</button>
 						);
 				}
