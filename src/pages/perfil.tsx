@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 
-const Profile: NextPage = () => {
+const Profile: NextPage<{ Auth: boolean }> = () => {
   return <></>
 }
 

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import excuteQuery from "src/ddbb";
 import { GetServerSideProps, NextPage } from "next";
 import styles from "@styles/citas.module.scss";
+import { useRouter } from "next/router";
+import { AuthRedirect } from "@common/Authredirect";
 
 const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
@@ -18,9 +20,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
 	};
 };
 
-const Citas: NextPage<{ data: string }> = ({ data }) => {
+const Citas: NextPage<{ data: string; Auth: boolean }> = ({ data, Auth }) => {
 	const [message, setMessage] = useState("");
 	const stateStyles = `${notoI.className} ${styles.state}`;
+	
+	const router = useRouter();
 
 	const time = [
 		"9'00",
@@ -47,6 +51,8 @@ const Citas: NextPage<{ data: string }> = ({ data }) => {
 	];
 
 	useEffect(() => {
+		AuthRedirect(false, router)
+
 		const DATA: userDDBBResult = JSON.parse(data);
 
 		console.log(DATA.rows);
