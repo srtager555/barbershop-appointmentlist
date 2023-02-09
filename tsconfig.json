@@ -19,6 +19,7 @@
       "@styles/*": ["src/styles/*"],
       "@common/*": ["src/common/*"],
       "@components/*": ["src/components/*"],
+      "@ddbb/*": ["src/ddbb/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
