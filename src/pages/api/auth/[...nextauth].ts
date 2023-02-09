@@ -1,19 +1,20 @@
 import NextAuth from "next-auth"
-import prisma from "@ddbb/prismadb";
+import Prisma from "@ddbb/prismadb";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt"
 
-export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+export default NextAuth({
+  adapter: PrismaAdapter(Prisma),
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
+      // @ts-ignore
       async authorize(credentials, _) {
         const { phoneNumber, password } = credentials as {
-          phoneNumber: string;
+          phoneNumber: number;
           password: string;
         };
 
@@ -21,9 +22,9 @@ export const authOptions = {
           throw new Error("No se encuentra el numero de telefono o la contraseña");
         }
 
-        const user = await prisma.users.findUnique({
+        const user = await Prisma.users.findUnique({
           where: {
-             phoneNumber,
+             phone: phoneNumber,
           },
         });
 
@@ -37,6 +38,5 @@ export const authOptions = {
     })
     // ...add more providers here
   ],
-}
-
-export default NextAuth(authOptions)
+  session: { strategy: 'jwt' },
+}) 
