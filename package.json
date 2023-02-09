@@ -23,6 +23,7 @@
     "wrapping-letters-react": "^2.7.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
