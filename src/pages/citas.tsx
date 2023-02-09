@@ -1,24 +1,24 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 
 import { useState, useEffect } from "react";
-import excuteQuery from "src/ddbb";
 import { GetServerSideProps, NextPage } from "next";
-import styles from "@styles/citas.module.scss";
 import { useRouter } from "next/router";
 import { AuthRedirect } from "@common/Authredirect";
+
+import styles from "@styles/citas.module.scss";
 
 const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
-export const getServerSideProps: GetServerSideProps = async () => {
-	let data = await excuteQuery({ query: "SELECT * FROM sql10595855.users;" }).then(
-		(data: object) => JSON.stringify(data)
-	);
+// export const getServerSideProps: GetServerSideProps = async () => {
+// 	let data = await excuteQuery({ query: "SELECT * FROM sql10595855.users;" }).then(
+// 		(data: object) => JSON.stringify(data)
+// 	);
 
-	return {
-		props: { data },
-	};
-};
+// 	return {
+// 		props: { data },
+// 	};
+// };
 
 const Citas: NextPage<{ data: string; Auth: boolean }> = ({ data, Auth }) => {
 	const [message, setMessage] = useState("");
@@ -50,13 +50,13 @@ const Citas: NextPage<{ data: string; Auth: boolean }> = ({ data, Auth }) => {
 		"8'00",
 	];
 
-	useEffect(() => {
-		AuthRedirect(false, router)
+	// useEffect(() => {
+	// 	AuthRedirect(false, router)
 
-		const DATA: userDDBBResult = JSON.parse(data);
+	// 	const DATA: userDDBBResult = JSON.parse(data);
 
-		console.log(DATA.rows);
-	}, [data]);
+	// 	console.log(DATA.rows);
+	// }, [data]);
 
 	//  I need improved this jsx logic, but first I will end the styles
 	return (
