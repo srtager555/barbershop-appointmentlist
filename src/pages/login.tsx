@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 
 import styles from "@styles/login.module.scss"
+import Form from "@components/form";
 
 const Login: NextPage = () => {
 	const [loading, setLoading] = useState(false);
@@ -32,28 +33,7 @@ const Login: NextPage = () => {
 	};
 
 	return (
-		<>
-			<form onSubmit={(e) => checkData(e)} className={styles["top"]}>
-				<p>number</p>
-				<input
-					id="number"
-					name="number"
-					type="number"
-					placeholder="+504 95873245"
-					required
-				/>
-				<p>password</p>
-				<input
-					id="password"
-					name="password"
-					type="password"
-					placeholder="tu contraseña secreta"
-					required
-				/>
-				<br />
-				<button>buscar data</button>
-			</form>
-		</>
+		<Form type="login" callback={checkData} />
 	);
 };
 
