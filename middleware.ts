@@ -10,9 +10,11 @@ export default async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  if (!session && path === "/citas") {
+ const NO_AUTH_PAGE = ["/login", "/register"].some((el) => el === path)
+
+  if (!session && NO_AUTH_PAGE) {
     return NextResponse.redirect(new URL("/login", req.url));
-  } else if (session && (path === "/login" || path === "/register")) {
+  } else if (session && NO_AUTH_PAGE) {
     return NextResponse.redirect(new URL("/citas", req.url));
   }
 
