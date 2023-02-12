@@ -8,22 +8,21 @@ const Registrar: NextPage = () => {
 	const SignUpHandler = async (e: FormEvent) => {
 		e.preventDefault();
 
-		fetch("/api/auth/register", {
+		await fetch("/api/createAccount",  {
 			method: "POST",
-			mode: 'no-cors',
 			headers: {
 				"Content-Type": "application/json",
 			},
 			body: JSON.stringify({
 				name: e.currentTarget.name.value,
-				phoneNumber: e.currentTarget.phone.value,
+				phone: e.currentTarget.phone.value,
 				password: e.currentTarget.password.value,
 			}),
 		}).then(async (res) => {
 			if (res.status === 200) {
 				console.log("Account created!");
 			} else {
-				console.log(await res.text());
+				console.log(res.text());
 			}
 		});
 	};
