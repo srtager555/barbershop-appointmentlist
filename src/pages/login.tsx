@@ -8,6 +8,7 @@ import Form from "@components/form";
 
 const Login: NextPage = () => {
 	const [loading, setLoading] = useState(false);
+	const [errorChecker, setErrorChecker] = useState({ ok: true, error: "" })
 	const router = useRouter();
 
 	const checkData = async (e: FormEvent) => {
@@ -17,7 +18,7 @@ const Login: NextPage = () => {
 		signIn("credentials", {
 			redirect: false,
 			// @ts-ignore
-			phoneNumber: e.currentTarget.number.value,
+			phoneNumber: e.currentTarget.phone.value,
 			// @ts-ignore
 			password: e.currentTarget.password.value,
 			// @ts-ignore
@@ -33,7 +34,10 @@ const Login: NextPage = () => {
 	};
 
 	return (
-		<Form type="login" callback={checkData} />
+		<div className={`${styles.container} ${loading ? styles.laoding : ""}`}>
+			<Form type="login" callback={checkData} />
+			
+		</div>
 	);
 };
 
