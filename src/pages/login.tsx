@@ -18,7 +18,7 @@ const Login: NextPage = () => {
 		signIn("credentials", {
 			redirect: false,
 			// @ts-ignore
-			phoneNumber: e.currentTarget.phone.value,
+			phone: e.currentTarget.phone.value,
 			// @ts-ignore
 			password: e.currentTarget.password.value,
 			// @ts-ignore
