@@ -3,7 +3,7 @@ import { Noto_Sans_Display as m } from "@next/font/google";
 import { useState, useEffect } from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
-import { AuthRedirect } from "@common/Authredirect";
+import { getSession, signOut } from "next-auth/react";
 
 import styles from "@styles/citas.module.scss";
 
@@ -23,7 +23,7 @@ const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 const Citas: NextPage<{ data: string; Auth: boolean }> = ({ data, Auth }) => {
 	const [message, setMessage] = useState("");
 	const stateStyles = `${notoI.className} ${styles.state}`;
-	
+
 	const router = useRouter();
 
 	const time = [
@@ -50,18 +50,34 @@ const Citas: NextPage<{ data: string; Auth: boolean }> = ({ data, Auth }) => {
 		"8'00",
 	];
 
-	// useEffect(() => {
-	// 	AuthRedirect(false, router)
+	useEffect(() => {
+		const data = async () => {
+			let data;
 
-	// 	const DATA: userDDBBResult = JSON.parse(data);
+			if (true)
+				data = fetch("/api/checkUser", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ phone: "555" }),
+				});
+			else data = fetch("/api/checkUser");
 
-	// 	console.log(DATA.rows);
-	// }, [data]);
+			return (await data).json();
+		};
+
+		const session = data();
+
+		console.log(session);
+	}, []);
 
 	//  I need improved this jsx logic, but first I will end the styles
 	return (
 		<div className={styles["container-appointments"]}>
-			<span className={styles["start-time"]}>apertura</span>
+			<span className={styles["start-time"]} onClick={() => signOut()}>
+				apertura
+			</span>
 			{time.map((time, index) => {
 				switch (time) {
 					case "10'30":
