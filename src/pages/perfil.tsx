@@ -1,6 +1,9 @@
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 
-const Profile: NextPage<{ Auth: boolean }> = () => {
+const Profile: NextPage = () => {
+  const session = useSession()
+
   return <></>
 }
 
