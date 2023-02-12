@@ -1,11 +1,34 @@
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
-import { signIn } from "next-auth/react";
 import Form from "@components/form";
 
 const Registrar: NextPage = () => {
-  return <Form type="regis" callback={() => console.log("A")} />
-}
+	const [responce, setResponce] = useState();
 
-export default Registrar
+	const SignUpHandler = async (e: FormEvent) => {
+		e.preventDefault();
+
+		fetch("/api/auth/register", {
+			method: "POST",
+			mode: 'no-cors',
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: e.currentTarget.name.value,
+				phoneNumber: e.currentTarget.phone.value,
+				password: e.currentTarget.password.value,
+			}),
+		}).then(async (res) => {
+			if (res.status === 200) {
+				console.log("Account created!");
+			} else {
+				console.log(await res.text());
+			}
+		});
+	};
+
+	return <Form type="regis" callback={SignUpHandler} />;
+};
+
+export default Registrar;
