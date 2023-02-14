@@ -8,7 +8,7 @@ import { AppointmentNav } from "@components/navbar/AppointmentNav";
 import styles from "@styles/navbar.module.scss";
 
 interface ComponentsList {
-	path: string;
+	path: string | string[];
 	navClass: string;
 	component: (arg0: unknown) => JSX.Element;
 }
@@ -56,14 +56,20 @@ export function Navbar() {
 	useEffect(() => {
 		const content: Array<ComponentsList> = [
 			{
-				path: "/citas",
+				path: ["/citas", "/citas/manana"],
 				navClass: styles.apointments,
 				component: () => AppointmentNav({ showTitle, scrollDirection }),
 			},
 			{ path: "/", navClass: styles.start, component: unClasico },
 		];
 
-		const newContent = content.find((element) => element.path === router.asPath);
+		const newContent = content.find((element) => {
+			if (Array.isArray(element.path)) {
+				return element.path.some((el) => el === router.asPath)
+			}
+			
+			else return element.path === router.asPath
+		});
 
 		if (newContent) {
 			setNav({ component: () => newContent.component({ showTitle, scrollDirection }) });
