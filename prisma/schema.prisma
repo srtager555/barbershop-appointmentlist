@@ -11,10 +11,25 @@ datasource db {
 }
 
 model users {
-  id          Int    @id @default(autoincrement())
-  name        String
-  phone       String @unique
-  appointment Int?   @unique
-  password    String
-  role        String @default("user")
+  id               Int    @id @default(autoincrement())
+  name             String
+  phone            String @unique
+  appoint_today    Int?   @unique
+  appoint_tomorrow Int?   @unique
+  password         String
+  role             String @default("user")
+}
+
+model apoint_today {
+  id      Int    @id @unique
+  time    String
+  state   String @default("open")
+  user_id Int?   @unique
+}
+
+model appoint_tomorrow {
+  id      Int    @id @unique
+  time    String
+  state   String @default("open")
+  user_id Int?   @unique
 }
