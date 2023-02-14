@@ -10,17 +10,15 @@ import styles from "@styles/citas.module.scss";
 const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-// 	let data = await excuteQuery({ query: "SELECT * FROM sql10595855.users;" }).then(
-// 		(data: object) => JSON.stringify(data)
-// 	);
+export const getServerSideProps: GetServerSideProps = async () => {
+	const DATA = await fetch(`${process.env.URL}api/appointments/hoy`).then((data) => data.json());
 
-// 	return {
-// 		props: { data },
-// 	};
-// };
+	return {
+		props: { data: DATA },
+	};
+};
 
-const Citas: NextPage<{ data: string; Auth: boolean }> = ({ data, Auth }) => {
+const Citas: NextPage<{ data: string }> = ({ data }) => {
 	const [message, setMessage] = useState("");
 	const stateStyles = `${notoI.className} ${styles.state}`;
 
@@ -51,26 +49,8 @@ const Citas: NextPage<{ data: string; Auth: boolean }> = ({ data, Auth }) => {
 	];
 
 	useEffect(() => {
-		const data = async () => {
-			let data;
-
-			if (true)
-				data = fetch("/api/checkUser", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ phone: "555" }),
-				});
-			else data = fetch("/api/checkUser");
-
-			return (await data).json();
-		};
-
-		const session = data();
-
-		console.log(session);
-	}, []);
+		console.log(data);
+	}, [data]);
 
 	//  I need improved this jsx logic, but first I will end the styles
 	return (
