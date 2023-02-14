@@ -1,10 +1,6 @@
-interface userDDBBResult {
-	rows: {
-		id: number;
-		name: string;
-		password: string;
-		phone: number;
-		appointment: number | null;
-		admin: string;
-	}[];
+interface appointmentData { 
+  id: number;
+  time: string;
+  state: string;
+  user_id: number;
 }
