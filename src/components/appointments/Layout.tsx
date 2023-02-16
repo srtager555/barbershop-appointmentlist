@@ -14,14 +14,13 @@ const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
 const Layout: NextPage<{ data: appointmentData[] }> = ({ data }) => {
-	const [DATA, setDATA] = useState<appointmentData[]>()
+	const [DATA, setDATA] = useState<appointmentData[]>();
 	const stateStyles = `${noto.className} ${styles.state}`;
 	const stateStylesItalic = `${notoI.className} ${styles.state}`;
 
 	useEffect(() => {
 		let processingData;
-
-	}, [])
+	}, []);
 
 	return (
 		<div className={styles["container-appointments"]}>
@@ -30,25 +29,33 @@ const Layout: NextPage<{ data: appointmentData[] }> = ({ data }) => {
 				const KEY = `${index} - ${appointment.time}`;
 
 				const PROPS = {
-					llave: KEY,
 					index,
 					time: appointment.time,
 					stateStyles: stateStylesItalic,
 				};
 
-				if (appointment.state === "close") 
-					return <ClosedTimeBTN callback={() => console.log("nope")} {...PROPS} />;
-				
-				if (appointment.user_id != null) 
-					return <BusyTimeBTN callback={() => console.log("ocupado")} {...PROPS} />;
-				
+				if (appointment.state === "close")
+					return (
+						<span key={KEY}>
+							<ClosedTimeBTN callback={() => console.log("nope")} {...PROPS} />
+						</span>
+					);
+
+				if (appointment.user_id != null)
+					return (
+						<span key={KEY}>
+							<BusyTimeBTN callback={() => console.log("ocupado")} {...PROPS} />
+						</span>
+					);
+
 				return (
-					// eslint-disable-next-line react/jsx-key
-					<AvailableTimeBTN
-						callback={() => console.log("nice")}
-						{...PROPS}
-						stateStyles={stateStyles}
-					/>
+					<span key={KEY}>
+						<AvailableTimeBTN
+							callback={() => console.log("nice")}
+							{...PROPS}
+							stateStyles={stateStyles}
+						/>
+					</span>
 				);
 			})}
 		</div>
