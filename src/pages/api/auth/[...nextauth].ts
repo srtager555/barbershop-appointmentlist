@@ -39,14 +39,14 @@ export default NextAuth({
 		// ...add more providers here
 	],
 	session: { strategy: "jwt" },
-	// callbacks: {
-	//   async session({ session, token, user }) {
-	//   // Send properties to the client, like an access_token and user id from a provider.
-	//   console.log(session)
-	//   console.log(token)
-	//   console.log(user)
+	callbacks: {
+		async session({ session, token, user }) {
+			// Send properties to the client, like an access_token and user id from a provider.
+			console.log(session);
+			console.log(token);
+			console.log(user);
 
-	//   return session
-	// }
-	// }
+			return session;
+		},
+	},
 });
