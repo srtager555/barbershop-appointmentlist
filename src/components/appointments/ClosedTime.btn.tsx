@@ -1,6 +1,6 @@
 import styles from "@styles/citas.module.scss";
 
-export const AvailableTimeBTN = ({ index, time, stateStyles, callback }: appointmentsButtons) => (
+export const ClosedTimeBTN = ({ index, time, stateStyles, callback }: appointmentsButtons) => (
 	<button
 		key={`${index} - ${time}`}
 		onClick={() => callback()}
