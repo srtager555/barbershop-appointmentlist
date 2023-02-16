@@ -36,26 +36,26 @@ const Layout: NextPage<{ data: appointmentData[] }> = ({ data }) => {
 
 				if (appointment.state === "close")
 					return (
-						<span key={KEY}>
+						<div className={styles["appointment-btn__container"]} key={KEY}>
 							<ClosedTimeBTN callback={() => console.log("nope")} {...PROPS} />
-						</span>
+						</div>
 					);
 
 				if (appointment.user_id != null)
 					return (
-						<span key={KEY}>
+						<div className={styles["appointment-btn__container"]} key={KEY}>
 							<BusyTimeBTN callback={() => console.log("ocupado")} {...PROPS} />
-						</span>
+						</div>
 					);
 
 				return (
-					<span key={KEY}>
+					<div className={styles["appointment-btn__container"]} key={KEY}>
 						<AvailableTimeBTN
 							callback={() => console.log("nice")}
 							{...PROPS}
 							stateStyles={stateStyles}
 						/>
-					</span>
+					</div>
 				);
 			})}
 		</div>
