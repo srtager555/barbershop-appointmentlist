@@ -6,7 +6,7 @@ interface appointmentData {
 }
 
 interface appointmentsButtons {
-  key: string;
+  llave: string;
   time: string;
   stateStyles: string;
   callback: Function;

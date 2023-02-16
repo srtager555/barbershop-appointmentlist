@@ -1,13 +1,13 @@
 import styles from "@styles/citas.module.scss";
 
-export const AvailableTimeBTN = ({ key, time, stateStyles, callback }: appointmentsButtons) => (
+export const AvailableTimeBTN = ({ llave, time, stateStyles, callback }: appointmentsButtons) => (
 	<button
-		key={key}
+		key={llave}
 		onClick={() => callback}
-		className={`${styles["appointment-btn"]} ${styles.user}`}
+		className={styles["appointment-btn"]}
 	>
 		<span className={styles.time}>{time}</span>
 		<span className={styles.line}></span>
-		<span className={stateStyles}>cancelar reserva</span>
+		<span className={stateStyles}>reservar puesto</span>
 	</button>
 );
