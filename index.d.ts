@@ -6,6 +6,7 @@ interface appointmentData {
 }
 
 interface appointmentsButtons {
+  key: string;
   index: number;
   time: string;
   stateStyles: string;
