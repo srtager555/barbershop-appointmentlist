@@ -1,8 +1,8 @@
 import styles from "@styles/citas.module.scss";
 
-export const UserTimeBTN = ({ index, time, stateStyles, callback }: appointmentsButtons) => (
+export const UserTimeBTN = ({ key, time, stateStyles, callback }: appointmentsButtons) => (
 	<button
-		key={`${index} - ${time}`}
+		key={key}
 		onClick={() => callback}
 		className={`${styles["appointment-btn"]} ${styles.user}`}
 	>
