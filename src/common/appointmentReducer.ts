@@ -4,15 +4,41 @@
  * @returns {appointmentData[]} Will return the appointment array without the first closed times
  */
 export function AppointmentReducer(data: appointmentData[]): appointmentData[] {
-  const OpeningTime = data.find((el) =>  el.state === "open")
-  let OpeningTimeIndex: number;
-  
-  if (OpeningTime) {
-    OpeningTimeIndex = data.indexOf(OpeningTime)
+	const OpeningTime = data.find((el) => el.state === "open");
+	let OpeningTimeIndex: number;
+	let lastClosedTimeIndex: number;
+	let ArrayClosedTime: appointmentData[] = [];
 
-    const firstClosedDataRemoved = data.splice(OpeningTimeIndex)
-    data = firstClosedDataRemoved
-  } 
+	// here will remove the first hour closed and the last hours closed
+	if (OpeningTime) {
+		OpeningTimeIndex = data.indexOf(OpeningTime);
+		data = data.splice(OpeningTimeIndex);
+	}
 
-  return data
+	const ClosingTime = data.reverse().find((el) => el.state === "open");
+
+	if (ClosingTime) {
+		lastClosedTimeIndex = data.indexOf(ClosingTime);
+		data = data.splice(lastClosedTimeIndex - 1).reverse();
+	}
+
+	data.forEach((element) => {
+		if (ArrayClosedTime.length > 0) {
+			if (element.state != "open") return ArrayClosedTime.push(element);
+
+			const startClosedTime = data.indexOf(ArrayClosedTime[0]);
+
+			data.splice(startClosedTime, ArrayClosedTime.length, {
+        id: ArrayClosedTime[0].id,
+				time: `${ArrayClosedTime[0].time} - ${ArrayClosedTime[ArrayClosedTime.length - 1].time}`,
+        state: "close",
+        user_id: null,
+			});
+
+      ArrayClosedTime = []
+		} else if (element.state === "close") ArrayClosedTime.push(element);
+	});
+
+	return data;
 }
+ 
