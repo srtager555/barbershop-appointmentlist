@@ -8,5 +8,5 @@ interface appointmentData {
 interface appointmentsButtons {
   time: string;
   stateStyles: string;
-  callback: Function;
+  callback?: Function;
 }
