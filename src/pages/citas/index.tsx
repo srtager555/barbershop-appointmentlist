@@ -8,7 +8,7 @@ import { AppointmentReducer } from "@common/appointmentReducer";
 const fetcher = (url: string) => fetch(url).then((data) => data.json());
 
 const Hoy: NextPage = () => {
-	const [processed, setProcessed] = useState<appointmentData[]>()
+	const [processed, setProcessed] = useState<appointmentData[]>([{ id: 0, state: "loading", time: "", user_id: null }])
 	const { data, error, isLoading } = useSWR(`/api/appointments/hoy`, fetcher)
 
 	useEffect(() => {

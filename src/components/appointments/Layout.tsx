@@ -6,6 +6,7 @@ import { ClosedTimeBTN } from "./ClosedTime.btn";
 import { BusyTimeBTN } from "./BusyTime.btn";
 import { UserTimeBTN } from "./UserTime.btn";
 import { AvailableTimeBTN } from "./AvailableTime.btn";
+import { LoadingTime } from "./LoadingTime";
 
 import styles from "@styles/citas.module.scss";
 
@@ -27,6 +28,13 @@ const Layout: NextPage<{ data: appointmentData[] }> = ({ data }) => {
 					time: appointment.time,
 					stateStyles: stateStylesItalic,
 				};
+
+				if (appointment.state === "loading")
+					return (
+						<div className={styles["appointment-btn__container"]} key={KEY}>
+							<LoadingTime {...PROPS} />
+						</div>
+					)
 
 				if (appointment.state === "close")
 					return (
