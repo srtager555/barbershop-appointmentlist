@@ -1,17 +1,26 @@
-import { GetServerSideProps, NextPage } from "next";
+import { useState, useEffect } from "react"
+import { NextPage } from "next";
 
 import Layout from "@components/appointments/Layout";
+import useSWR from "swr";
+import { AppointmentReducer } from "@common/appointmentReducer";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-	const DATA = await fetch(`${process.env.URL}api/appointments/hoy`).then((data) => data.json());
+const fetcher = (url: string) => fetch(url).then((data) => data.json());
 
-	return {
-		props: { data: DATA },
-	};
-};
+const Hoy: NextPage = () => {
+	const [processed, setProcessed] = useState<appointmentData[]>()
+	const { data, error, isLoading } = useSWR(`/api/appointments/hoy`, fetcher)
 
-const Hoy: NextPage<{ data: appointmentData[] }> = ({ data }) => {
-  return <Layout data={data} />
+	useEffect(() => {
+		if (data) {
+			setProcessed(AppointmentReducer(data))
+		}
+	}, [data])
+
+	if (error) return <span>Hubo un error</span>
+	if (isLoading) return <span>Loading...</span>
+
+  return <Layout data={processed} />
 }
 
 export default Hoy
