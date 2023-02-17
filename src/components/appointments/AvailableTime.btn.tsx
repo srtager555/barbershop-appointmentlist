@@ -2,7 +2,7 @@ import styles from "@styles/citas.module.scss";
 
 export const AvailableTimeBTN = ({  time, stateStyles, callback }: appointmentsButtons) => (
 	<button
-		onClick={() => callback()}
+		onClick={() => callback && callback()}
 		className={styles["appointment-btn"]}
 	>
 		<span className={styles.time}>{time}</span>
