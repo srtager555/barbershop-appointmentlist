@@ -31,11 +31,22 @@
     border-radius: 100%;
     color: var(--white);
     background-color: var(--custom-black);
+    cursor: pointer;
     transition: 500ms ease-in;
-
-    .show {
+    z-index: 99;
+    
+    &.show {
       bottom: 5%;
     }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+    
+    &:active {
+      transform: scale(0.8);
+    }
+
   }
 
   .return {
