@@ -9,7 +9,7 @@ const Despues: NextPage = () => {
 
   if (dataDays) return <AppointmentDays setDataDays={setDataDays} />
 
-  return <Layout data={[]} />
+  return <Layout data={dataDays} />
 }
 
 export default Despues
