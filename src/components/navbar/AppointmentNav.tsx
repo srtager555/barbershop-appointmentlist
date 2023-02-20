@@ -20,7 +20,7 @@ export const AppointmentNav = ({
 			<div className={`${styles["appointment-day"]} ${scrollDirection ? styles.show : ""}`}>
 				<ActiveLink href="/citas">Hoy</ActiveLink>
 				<span className={styles.line}></span>
-				<ActiveLink href="/citas/manana">Mañana</ActiveLink>
+				<ActiveLink href="/citas/despues">Después</ActiveLink>
 			</div>
 			<div className={styles["state-poster"]}>
 				<div className={styles.state}>
