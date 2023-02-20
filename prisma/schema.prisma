@@ -11,25 +11,39 @@ datasource db {
 }
 
 model users {
-  id               Int    @id @default(autoincrement())
-  name             String
-  phone            String @unique
-  appoint_today    Int?   @unique
-  appoint_tomorrow Int?   @unique
-  password         String
-  role             String @default("user")
+  id          Int    @id @default(autoincrement())
+  name        String
+  phone       String @unique
+  appointment Int?   @unique
+  password    String
+  role        String @default("user")
 }
 
-model apoint_today {
-  id      Int    @id @unique
-  time    String
-  state   String @default("open")
-  user_id Int?   @unique
+model layout_day {
+  id      Int     @id @unique
+  date    String  @db.VarChar(9)
+  opening String  @db.VarChar(5)
+  cloding String  @db.VarChar(5)
+  closed  Boolean @db.TinyInt
 }
 
-model appoint_tomorrow {
+model custom_oc {
+  id      Int     @id @unique
+  date    String  @db.VarChar(45)
+  opening String  @db.VarChar(5)
+  cloding String  @db.VarChar(5)
+  closed  Boolean @db.TinyInt
+}
+
+model custom_closed_time {
+  id   Int    @id @unique
+  date String @db.VarChar(45)
+  time String @db.VarChar(5)
+}
+
+model appointments {
   id      Int    @id @unique
-  time    String
-  state   String @default("open")
-  user_id Int?   @unique
+  date    String @db.VarChar(45)
+  user_id Int    @unique
+  time    String @db.VarChar(5)
 }
