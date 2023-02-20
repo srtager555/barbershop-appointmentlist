@@ -21,9 +21,9 @@ model users {
 
 model layout_day {
   id      Int     @id @unique
-  date    String  @unique @db.VarChar(9)
+  day     String  @unique @db.VarChar(9)
   opening String  @db.VarChar(5)
-  cloding String  @db.VarChar(5)
+  closing String  @db.VarChar(5)
   closed  Boolean @db.TinyInt
 }
 
