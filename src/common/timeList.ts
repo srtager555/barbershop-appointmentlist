@@ -3,10 +3,12 @@ export function TimeList(
 	appointments: rawAppointments[] | undefined,
 	closedTime: customClosedTime[] | undefined
 ): Array<appointmentData | undefined> {
-  if(!OpeningClosing) console.log('lol')
-  
-	const RESULT: Array<appointmentData | undefined> = time.map((element, index) => {
+  if(!OpeningClosing) return []
 
+  const OPENING_index_time = time.indexOf(OpeningClosing.opening.replace(":", '"'))
+  const CLOSING_index_time = time.indexOf(OpeningClosing.closing.replace(":", '"'))
+
+	const RESULT: Array<appointmentData | undefined> = time.map((element, index) => {
 		let state: state = "open";
 		let user_id: user_id = null;
 
@@ -15,7 +17,9 @@ export function TimeList(
 			(appoint) => appoint.time === element
 		);
 
-		if (IS_CLOSED) state = "close";
+    if (OPENING_index_time > index) state = "close"
+    else if (CLOSING_index_time <= index) state = "close"
+		else if (IS_CLOSED) state = "close";
 		else if (IS_BUSY) {
 			state = "busy";
 			user_id = IS_BUSY.user_id;
