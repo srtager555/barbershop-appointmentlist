@@ -2,6 +2,19 @@ type state = "close" | "loading" | null | "busy" | "open";
 type user_id = number | null;
 type Time = time | "0";
 
+type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
+  ? Acc[number]
+  : Enumerate<N, [...Acc, Acc['length']]>
+
+type Range<F extends number, T extends number> = Exclude<Enumerate<T>, Enumerate<F>>
+
+type T = Range<20, 100>
+
+interface timeDate {
+	day: Range<0, 6>;
+	date: Range<0, 30>;
+	year: number
+}
 interface appointmentData {
 	id: number;
 	time: Time;
