@@ -12,14 +12,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		}}`;
 
 		let OPENING_CLOSING =
-			(await Prisma?.custom_oc.findUnique({
+			(await Prisma?.layout_day.findUnique({
 				where: {
-					date: UTC_TODAY,
+					day: week[TODAY.getUTCDay()],
 				},
 			})) ||
-			(await Prisma?.custom_oc.findUnique({
+			(await Prisma?.layout_day.findUnique({
 				where: {
-					date: "default",
+					day: "default",
 				},
 			}));
 
