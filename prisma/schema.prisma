@@ -21,7 +21,7 @@ model users {
 
 model layout_day {
   id      Int     @id @unique
-  date    String  @db.VarChar(9)
+  date    String  @unique @db.VarChar(9)
   opening String  @db.VarChar(5)
   cloding String  @db.VarChar(5)
   closed  Boolean @db.TinyInt
@@ -29,15 +29,15 @@ model layout_day {
 
 model custom_oc {
   id      Int     @id @unique
-  date    String  @db.VarChar(45)
+  date    String  @unique @db.VarChar(45)
   opening String  @db.VarChar(5)
-  cloding String  @db.VarChar(5)
+  closing String  @db.VarChar(5)
   closed  Boolean @db.TinyInt
 }
 
 model custom_closed_time {
   id   Int    @id @unique
-  date String @db.VarChar(45)
+  date String @unique @db.VarChar(45)
   time String @db.VarChar(5)
 }
 
