@@ -43,7 +43,7 @@ const Layout: NextPage<{ data: appointmentData[] }> = ({ data }) => {
 						</div>
 					);
 
-				if (appointment.user_id != null)
+				if (appointment.state === "busy")
 					return (
 						<div className={styles["appointment-btn__container"]} key={KEY}>
 							<BusyTimeBTN callback={() => console.log("ocupado")} {...PROPS} />
