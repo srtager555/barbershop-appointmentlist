@@ -3,8 +3,7 @@
  * @param  {appointmentData[]} data An array with the data from appointments
  * @returns {appointmentData[]} Will return the appointment array without the first closed times
  */
-export function AppointmentReducer(data: Array<appointmentData>): appointmentData[] {
-
+export function AppointmentReducer(data: Array<appointmentData>): appointmentData[] | "closed" {
 	const OpeningTime = data.find((el) => el.state === "open");
 	let OpeningTimeIndex: number;
 	let lastClosedTimeIndex: number;
@@ -30,16 +29,17 @@ export function AppointmentReducer(data: Array<appointmentData>): appointmentDat
 			const startClosedTime = data.indexOf(ArrayClosedTime[0]);
 
 			data.splice(startClosedTime, ArrayClosedTime.length, {
-        id: ArrayClosedTime[0].id,
-				time: `${ArrayClosedTime[0].time} - ${ArrayClosedTime[ArrayClosedTime.length - 1].time}`,
-        state: "close",
-        user_id: null,
+				id: ArrayClosedTime[0].id,
+				time: `${ArrayClosedTime[0].time} - ${
+					ArrayClosedTime[ArrayClosedTime.length - 1].time
+				}`,
+				state: "close",
+				user_id: null,
 			});
 
-      ArrayClosedTime = []
+			ArrayClosedTime = [];
 		} else if (element.state === "close") ArrayClosedTime.push(element);
 	});
 
-	return data;
+	return data.every((el) => el.state === "close") ? "closed" : data;
 }
- 
