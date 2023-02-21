@@ -1,7 +1,7 @@
 export const week = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vier", "Sab"];
 
 export const months = [
-	"Enerp",
+	"Enero",
 	"Febrero",
 	"Marzo",
 	"Abril",
