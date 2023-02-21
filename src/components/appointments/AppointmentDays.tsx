@@ -44,11 +44,11 @@ export function AppointmentDays({ setDataDays, setOpenning }: any) {
 	async function handlerSetDate(n: number) {
 		const fecha = handlerCreateDate(n);
 		
-		const DATA = await fetch(`/api/appointments/hoy`, {
+		const DATA = await fetch(`/api/appointments/tomorrow`, {
 			method: "POST",
 			body: JSON.stringify({ date: fecha }),
 		}).then((data) => data.json())
-		
+
 		setDataDays(DATA);
 		setOpenning(fecha)
 		
