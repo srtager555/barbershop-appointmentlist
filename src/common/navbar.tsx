@@ -56,7 +56,7 @@ export function Navbar() {
 	useEffect(() => {
 		const content: Array<ComponentsList> = [
 			{
-				path: ["/citas", "/citas/manana"],
+				path: ["/citas", "/citas/despues"],
 				navClass: styles.apointments,
 				component: () => AppointmentNav({ showTitle, scrollDirection }),
 			},
