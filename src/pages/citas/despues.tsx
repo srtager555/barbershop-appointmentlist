@@ -6,10 +6,11 @@ import { useState } from "react"
 
 const Despues: NextPage = () => {
   const [dataDays, setDataDays] = useState<appointmentData[] | undefined>()
+  const [openning, setOpenning] = useState<string>()
 
-  if (!dataDays) return <AppointmentDays setDataDays={setDataDays} />
+  if (!dataDays) return <AppointmentDays setDataDays={setDataDays} setOpenning={setOpenning} />
 
-  return <Layout data={dataDays} />
+  return <Layout data={dataDays} openning={openning} />
 }
 
 export default Despues
