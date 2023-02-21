@@ -2,13 +2,13 @@ export function TimeList(
 	OpeningClosing: { opening: Time; closing: Time; closed: boolean } | undefined | null,
 	appointments: rawAppointments[] | undefined,
 	closedTime: customClosedTime[] | undefined
-): Array<appointmentData | undefined> {
+): Array<appointmentData> {
   if(!OpeningClosing) return []
 
   const OPENING_index_time = time.indexOf(OpeningClosing.opening.replace(":", '"'))
   const CLOSING_index_time = time.indexOf(OpeningClosing.closing.replace(":", '"'))
 
-	const RESULT: Array<appointmentData | undefined> = time.map((element, index) => {
+	const RESULT: Array<appointmentData> = time.map((element, index) => {
 		let state: state = "open";
 		let user_id: user_id = null;
 

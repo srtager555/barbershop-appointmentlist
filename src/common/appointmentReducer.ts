@@ -3,7 +3,8 @@
  * @param  {appointmentData[]} data An array with the data from appointments
  * @returns {appointmentData[]} Will return the appointment array without the first closed times
  */
-export function AppointmentReducer(data: appointmentData[]): appointmentData[] {
+export function AppointmentReducer(data: Array<appointmentData>): appointmentData[] {
+
 	const OpeningTime = data.find((el) => el.state === "open");
 	let OpeningTimeIndex: number;
 	let lastClosedTimeIndex: number;
