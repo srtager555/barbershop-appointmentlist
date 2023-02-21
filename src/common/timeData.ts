@@ -1,18 +1,18 @@
 export const week = ["Dom", "Lun", "Mar", "Mier", "Jue", "Vier", "Sab"];
 
 export const months = [
-	"January",
-	"February",
-	"March",
-	"April",
-	"May",
-	"June",
-	"July",
-	"August",
-	"September",
-	"Octuber",
-	"November",
-	"December",
+	"Enerp",
+	"Febrero",
+	"Marzo",
+	"Abril",
+	"Mayo",
+	"Junio",
+	"Julio",
+	"Agosto",
+	"Septiembre",
+	"Octubre",
+	"Noviembre",
+	"Diciembre",
 ];
 
 export const TODAY = new Date();
