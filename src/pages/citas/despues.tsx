@@ -5,9 +5,9 @@ import { NextPage } from "next"
 import { useState } from "react"
 
 const Despues: NextPage = () => {
-  const [dataDays, setDataDays] = useState<appointmentData[]>([])
+  const [dataDays, setDataDays] = useState<appointmentData[] | undefined>()
 
-  if (dataDays) return <AppointmentDays setDataDays={setDataDays} />
+  if (!dataDays) return <AppointmentDays setDataDays={setDataDays} />
 
   return <Layout data={dataDays} />
 }
