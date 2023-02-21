@@ -1,0 +1,26 @@
+  .toTop {
+    position: fixed;
+    bottom: -10%;
+    left: 83%;
+    font-size: 1.5rem;
+    padding: 10px 13px;
+    border: none;
+    border-radius: 100%;
+    color: var(--white);
+    background-color: var(--custom-black);
+    cursor: pointer;
+    transition: 500ms ease-in;
+    z-index: 99;
+    
+    &.show {
+      bottom: 5%;
+    }
+
+    &:hover {
+      transform: scale(1.1);
+    }
+    
+    &:active {
+      transform: scale(0.8);
+    }
+  }

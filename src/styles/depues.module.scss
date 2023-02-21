@@ -1,7 +1,7 @@
 .container {
   width: 85%;
   margin: 0 auto;
-  margin-top: 100px;
+  margin-top: 250px;
 
   &::after {
 		content: "";
@@ -14,40 +14,12 @@
 		mask-image: linear-gradient(
 			0deg,
 			rgba(0, 0, 0, 0) 0%,
-			rgba(0, 0, 0, 0) 85%,
-			rgba(9, 9, 9, 0.9290091036414566) 95%,
+			rgba(0, 0, 0, 0) 75%,
+			rgba(9, 9, 9, 0.9290091036414566) 85%,
 			rgba(0, 0, 0, 1) 100%
 		);
 		pointer-events: none;
 	}
-
-  .toTop {
-    position: fixed;
-    bottom: -10%;
-    left: 83%;
-    font-size: 1.5rem;
-    padding: 10px 13px;
-    border: none;
-    border-radius: 100%;
-    color: var(--white);
-    background-color: var(--custom-black);
-    cursor: pointer;
-    transition: 500ms ease-in;
-    z-index: 99;
-    
-    &.show {
-      bottom: 5%;
-    }
-
-    &:hover {
-      transform: scale(1.1);
-    }
-    
-    &:active {
-      transform: scale(0.8);
-    }
-
-  }
 
   .return {
     display: flex;
