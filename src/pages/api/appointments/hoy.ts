@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { TimeList } from "@common/timeList";
+import { AppointmentReducer } from "@common/appointmentReducer";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 		const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -34,7 +35,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			},
 		});
 
-		const PROCESS_TODAY = TimeList(OPENING_CLOSING, TODAY_APOINTMENTS, TODAY_CLOSED_TIME);
+		const TODAY_LIST = TimeList(OPENING_CLOSING, TODAY_APOINTMENTS, TODAY_CLOSED_TIME);
+		const PROCESS_TODAY = AppointmentReducer(TODAY_LIST)
 
 		res.status(200).json(PROCESS_TODAY);
 }
