@@ -1,16 +1,9 @@
-import Link from "next/link";
-import { useEffect, useState } from "react";
 import { TODAY, months, week } from "@common/timeData";
+import { ButtonToTop } from "@common/buttonToTop";
 
 import styles from "@styles/depues.module.scss";
 
 export function AppointmentDays({ setDataDays }: { setDataDays: any}) {
-	const [isOverScroll, setIsOverScroll] = useState(false);
-
-	function handlerScroll() {
-		if (window.scrollY > 400) setIsOverScroll(true);
-		else setIsOverScroll(false);
-	}
 
 	function handlerCreateDate(daysToPlus: number) {
 		let date = TODAY.getUTCDate() + daysToPlus;
@@ -59,26 +52,9 @@ export function AppointmentDays({ setDataDays }: { setDataDays: any}) {
 		setDataDays(DATA);
 	}
 
-	useEffect(() => {
-		window.addEventListener("scroll", handlerScroll);
-
-		return () => {
-			window.removeEventListener("scroll", handlerScroll);
-		};
-	}, []);
-
 	return (
 		<div className={styles.container}>
-			<button
-				className={`${styles.toTop} ${isOverScroll ? styles.show : ""}`}
-				onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-			>
-				⇑
-			</button>
-			<Link href="/citas" className={styles.return}>
-				<span className={styles.arrow}>↼</span>{" "}
-				<span className={styles.text}>Regresar al presente</span>
-			</Link>
+			<ButtonToTop />
 			<p className={styles["example-text"]}>Selecciona uno de los siguientes días</p>
 			<div className={styles.container__button}>
 				{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((el) => {
