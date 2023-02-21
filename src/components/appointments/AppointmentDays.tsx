@@ -4,7 +4,7 @@ import { TODAY, months, week } from "@common/timeData";
 
 import styles from "@styles/depues.module.scss";
 
-export function AppointmentDays(setDataDays: any) {
+export function AppointmentDays({ setDataDays }: { setDataDays: any}) {
 	const [isOverScroll, setIsOverScroll] = useState(false);
 
 	function handlerScroll() {
@@ -51,12 +51,12 @@ export function AppointmentDays(setDataDays: any) {
 	async function handlerSetDate(n: number) {
 		const fecha = handlerCreateDate(n);
 
-		setDataDays(
-			await fetch(`${process.env.URL}/api/appointment/tomorrow`, {
-				method: "POST",
-				body: JSON.stringify({ date: fecha }),
-			}).then((data) => data.json())
-		);
+		const DATA = await fetch(`/api/appointments/hoy`, {
+			method: "POST",
+			body: JSON.stringify({ date: fecha }),
+		}).then((data) => data.json())
+
+		setDataDays(DATA);
 	}
 
 	useEffect(() => {
