@@ -8,19 +8,12 @@ import { AppointmentReducer } from "@common/appointmentReducer";
 const fetcher = (url: string) => fetch(url).then((data) => data.json());
 
 const Hoy: NextPage = () => {
-	const [processed, setProcessed] = useState<appointmentData[]>([{ id: 0, state: "loading", time: "", user_id: null }])
-	const { data, error, isLoading } = useSWR(`/api/appointments/hoy`, fetcher)
-
-	useEffect(() => {
-		if (data) {
-			setProcessed(AppointmentReducer(data))
-		}
-	}, [data])
+	const { data, error, isLoading } = useSWR(`/api/appointments/hoy`, fetcher);
 
 	if (error) return <span>Hubo un error</span>
 	if (isLoading) return <span>Loading...</span>
 
-  return <Layout data={processed} />
+  return <Layout data={data} />
 }
 
 export default Hoy
