@@ -13,13 +13,13 @@ import styles from "@styles/citas.module.scss";
 const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
-const Layout: NextPage<{ data: appointmentData[] }> = ({ data }) => {
+const Layout: NextPage<{ data: appointmentData[], openning?: string }> = ({ data, openning }) => {
 	const stateStyles = `${noto.className} ${styles.state}`;
 	const stateStylesItalic = `${notoI.className} ${styles.state}`;
 
 	return (
 		<div className={styles["container-appointments"]}>
-			<span className={styles["start-time"]}>apertura</span>
+			<span className={styles["start-time"]}>{openning ? openning : "apertura"}</span>
 			{data.map((appointment, index) => {
 				const KEY = `${index} - ${appointment.time}`;
 

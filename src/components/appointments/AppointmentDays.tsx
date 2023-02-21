@@ -3,7 +3,7 @@ import { ButtonToTop } from "@common/buttonToTop";
 
 import styles from "@styles/depues.module.scss";
 
-export function AppointmentDays({ setDataDays }: { setDataDays: any}) {
+export function AppointmentDays({ setDataDays, setOpenning }: any) {
 
 	function handlerCreateDate(daysToPlus: number) {
 		let date = TODAY.getUTCDate() + daysToPlus;
@@ -43,13 +43,16 @@ export function AppointmentDays({ setDataDays }: { setDataDays: any}) {
 
 	async function handlerSetDate(n: number) {
 		const fecha = handlerCreateDate(n);
-
+		
 		const DATA = await fetch(`/api/appointments/hoy`, {
 			method: "POST",
 			body: JSON.stringify({ date: fecha }),
 		}).then((data) => data.json())
-
+		
 		setDataDays(DATA);
+		setOpenning(fecha)
+		
+		window.scrollTo({ top: 0, behavior: 'smooth'})
 	}
 
 	return (
