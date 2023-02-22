@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (!date) res.status(200).json("¿Que haces aquí?")
 
-  const DAY_NUMBER: number = new Date(date).getUTCDay()
+  const DAY_NUMBER: number = new Date(date).getDay()
 
 	const OP_LAYOUT = await OPENING_CLOSING(DAY_NUMBER);
   

@@ -1,12 +1,12 @@
 import { TODAY, months, week } from "@common/timeData";
-import { ButtonToTop } from "@common/buttonToTop";
+import { ButtonToTop } from "@common/ButtonToTop";
 
 import styles from "@styles/depues.module.scss";
 
 export function AppointmentDays({ setDataDays, setOpenning }: any) {
 
 	function handlerCreateDate(daysToPlus: number) {
-		let date = TODAY.getUTCDate() + daysToPlus;
+		let date = TODAY.getDate() + daysToPlus;
 		let month = TODAY.getUTCMonth();
 		let year = TODAY.getUTCFullYear();
 

@@ -6,7 +6,7 @@ import { AppointmentReducer } from "@common/appointmentReducer";
 import { OPENING_CLOSING, DATE_APOINTMENTS, DATE_CLOSED_TIME } from "@ddbb/prisma.queries";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-		const OP_LAYOUT = await OPENING_CLOSING(TODAY.getUTCDay())
+		const OP_LAYOUT = await OPENING_CLOSING(TODAY.getDay())
 
 		const TODAY_APOINTMENTS = await DATE_APOINTMENTS(UTC_TODAY)
 

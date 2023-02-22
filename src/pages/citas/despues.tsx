@@ -1,3 +1,4 @@
+import { TODAY } from "@common/timeData"
 import { AppointmentDays } from "@components/appointments/AppointmentDays"
 import Layout from "@components/appointments/Layout"
 import { NextPage } from "next"
