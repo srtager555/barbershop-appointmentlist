@@ -9,6 +9,7 @@ import { AvailableTimeBTN } from "./AvailableTime.btn";
 import { LoadingTime } from "./LoadingTime";
 
 import styles from "@styles/citas.module.scss";
+import ClosedDay from "./ClosedDay";
 
 const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
@@ -23,7 +24,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 	return (
 		<div className={styles["container-appointments"]}>
 			{data === "closed" ? (
-				"?"
+				<ClosedDay />
 			) : (
 				<>
 					<span className={styles["start-time"]}>{openning ? openning : "apertura"}</span>
