@@ -27,7 +27,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 				<ClosedDay />
 			) : (
 				<>
-					<span className={styles["start-time"]}>{openning ? openning : "apertura"}</span>
+					<span className={styles["start-time"]}>{openning ? `Reservas del ${openning}` : "apertura"}</span>
 					{data.map((appointment, index) => {
 						const KEY = `${index} - ${appointment.time}`;
 
