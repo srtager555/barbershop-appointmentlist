@@ -1,6 +1,7 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 
 import { NextPage } from "next";
+import { useSession } from "next-auth/react";
 
 import { ClosedTimeBTN } from "./ClosedTime.btn";
 import { BusyTimeBTN } from "./BusyTime.btn";
@@ -18,6 +19,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 	data,
 	openning,
 }) => {
+	const { data: session } = useSession()
 	const stateStyles = `${noto.className} ${styles.state}`;
 	const stateStylesItalic = `${notoI.className} ${styles.state}`;
 
@@ -41,6 +43,17 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 							return (
 								<div className={styles["appointment-btn__container"]} key={KEY}>
 									<LoadingTime {...PROPS} />
+								</div>
+							);
+
+							console.log(session?.user?.id, session?.user)
+						if (appointment.user_id === session?.user?.id)
+							return (
+								<div className={styles["appointment-btn__container"]} key={KEY}>
+									<UserTimeBTN
+										callback={() => console.log("nope")}
+										{...PROPS}
+									/>
 								</div>
 							);
 
