@@ -10,10 +10,14 @@ const NotoSansDisplay = Noto_Sans_Display({ subsets: ["latin"] });
 export const AppointmentNav = ({
 	showTitle,
 	scrollDirection,
+	isClosed
 }: {
 	showTitle: boolean;
 	scrollDirection: boolean;
+	isClosed: "closed" | appointmentData[]
 }) => {
+	const CLOSED = isClosed === "closed"
+
 	return (
 		<div className={styles.container}>
 			<h2 className={`${styles.title} ${showTitle ? styles.show : ""}`}>Reservas</h2>
@@ -22,12 +26,14 @@ export const AppointmentNav = ({
 				<span className={styles.line}></span>
 				<ActiveLink href="/citas/despues">Después</ActiveLink>
 			</div>
-			<div className={styles["state-poster"]}>
+			<div className={`${styles["state-poster"]}${CLOSED ? "" : ` ${styles.open}`}`}>
 				<div className={styles.state}>
-					<span className={NotoSansDisplay.className}>✂️ ¡Jossiel esta cortando! 💈</span>
+					<span className={NotoSansDisplay.className}>
+						{CLOSED ? "¡Cerrado!" : "✂️ ¡Jossiel esta cortando! 💈"}
+					</span>
 				</div>
 				<div className={styles["barber-lantern"]}>
-					<div className={styles["lantern-slider"]}>
+					<div className={`${styles["lantern-slider"]}${CLOSED ? "" : ` ${styles.open}`}`}>
 						<Wl
 							text="ioioioioioioio"
 							textOptions={{
