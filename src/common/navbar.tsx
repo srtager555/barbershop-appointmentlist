@@ -24,18 +24,17 @@ export function Navbar() {
 	const [scrollDirection, setScrollDirection] = useState(true);
 	const [lastScrollPosition, setLastScrollPosition] = useState(0);
 
-	useEffect(() => {
-		const handleTitleChecker = () => {
-			if (window.scrollY <= 0) setShowTitle(true);
-			else setShowTitle(false);
-		};
+	const handleTitleChecker = () => {
+		if (window.scrollY <= 0) setShowTitle(true);
+		else setShowTitle(false);
+	};
 
+	useEffect(() => {
 		const handleScrollDirection = () => {
-			if ( window.scrollY <= 0) {
+			if (window.scrollY <= 0) {
 				setScrollDirection(true);
 				setLastScrollPosition(window.scrollY);
-			}
-			else if (lastScrollPosition < window.scrollY) {
+			} else if (lastScrollPosition < window.scrollY) {
 				setScrollDirection(false);
 				setLastScrollPosition(window.scrollY);
 			} else {
@@ -65,10 +64,8 @@ export function Navbar() {
 
 		const newContent = content.find((element) => {
 			if (Array.isArray(element.path)) {
-				return element.path.some((el) => el === router.asPath)
-			}
-			
-			else return element.path === router.asPath
+				return element.path.some((el) => el === router.asPath);
+			} else return element.path === router.asPath;
 		});
 
 		if (newContent) {
