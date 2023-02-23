@@ -15,7 +15,10 @@ export const months = [
 	"Diciembre",
 ];
 
+
 export const TODAY = new Date();
 
 // example: December 15 2023
-export const UTC_TODAY = `${TODAY.getUTCMonth}M ${TODAY.getUTCDate} ${TODAY.getUTCFullYear}}`;
+export const TODAY_CUSTOM = `${months[TODAY.getMonth()]} ${TODAY.getDate()} ${TODAY.getFullYear()}`;
+
+export const UTC_TODAY = `${months[TODAY.getUTCMonth()]} ${TODAY.getUTCDate()} ${TODAY.getUTCFullYear()}}`;
