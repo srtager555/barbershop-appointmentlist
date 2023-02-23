@@ -40,9 +40,19 @@ export default NextAuth({
 	],
 	session: { strategy: "jwt" },
 	callbacks: {
-		async session({ session, token, user }) {
+		async session({ session, token }) {
 			// Send properties to the client, like an access_token and user id from a provider.
-			// session.user.id = user.id
+			const user = await Prisma.users.findUnique({
+				where: {
+					id: Number(token.sub)
+				}
+			})
+
+			if (!user) return session
+
+			session.user.id = user?.id
+			session.user.phone = user?.phone
+			session.user.role = user?.role
 
 			return session;
 		},
