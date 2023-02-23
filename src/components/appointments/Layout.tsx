@@ -20,7 +20,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 	data,
 	openning,
 }) => {
-	const { data: session } = useSession()
+	const { data: session } = useSession();
 	const stateStyles = `${noto.className} ${styles.state}`;
 	const stateStylesItalic = `${notoI.className} ${styles.state}`;
 
@@ -30,7 +30,9 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 				<ClosedDay />
 			) : (
 				<>
-					<span onClick={() => signOut()} className={styles["start-time"]}>{openning ? `Reservas del ${openning}` : "apertura"}</span>
+					<span onClick={() => signOut()} className={styles["start-time"]}>
+						{openning ? `Reservas del ${openning}` : "apertura"}
+					</span>
 					{data.map((appointment, index) => {
 						const KEY = `${index} - ${appointment.time}`;
 
@@ -38,7 +40,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 							index,
 							time: appointment.time,
 							stateStyles: stateStylesItalic,
-							date: openning ? openning : TODAY_CUSTOM
+							date: openning ? openning : TODAY_CUSTOM,
 						};
 
 						if (appointment.state === "loading")
@@ -48,15 +50,17 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 								</div>
 							);
 
-						if (appointment.user_id === session?.user?.id)
-							return (
-								<div className={styles["appointment-btn__container"]} key={KEY}>
-									<UserTimeBTN
-										callback={() => console.log("nope")}
-										{...PROPS}
-									/>
-								</div>
-							);
+						if (session) {
+							if (appointment.user_id === session?.user?.id)
+								return (
+									<div className={styles["appointment-btn__container"]} key={KEY}>
+										<UserTimeBTN
+											callback={() => console.log("nope")}
+											{...PROPS}
+										/>
+									</div>
+								);
+						}
 
 						if (appointment.state === "close")
 							return (
@@ -80,10 +84,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 
 						return (
 							<div className={styles["appointment-btn__container"]} key={KEY}>
-								<AvailableTimeBTN
-									{...PROPS}
-									stateStyles={stateStyles}
-								/>
+								<AvailableTimeBTN {...PROPS} stateStyles={stateStyles} />
 							</div>
 						);
 					})}
