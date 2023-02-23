@@ -20,7 +20,7 @@ model users {
 }
 
 model layout_day {
-  id      Int     @id @unique
+  id      Int     @id @unique @default(autoincrement())
   day     String  @unique @db.VarChar(9)
   opening String  @db.VarChar(5)
   closing String  @db.VarChar(5)
@@ -28,7 +28,7 @@ model layout_day {
 }
 
 model custom_oc {
-  id      Int     @id @unique
+  id      Int     @id @unique @default(autoincrement())
   date    String  @unique @db.VarChar(45)
   opening String  @db.VarChar(5)
   closing String  @db.VarChar(5)
@@ -36,13 +36,13 @@ model custom_oc {
 }
 
 model custom_closed_time {
-  id   Int    @id @unique
+  id   Int    @id @unique @default(autoincrement())
   date String @unique @db.VarChar(45)
   time String @db.VarChar(5)
 }
 
 model appointments {
-  id      Int    @id @unique
+  id      Int    @id @unique @default(autoincrement())
   date    String @db.VarChar(45)
   user_id Int    @unique
   time    String @db.VarChar(5)
