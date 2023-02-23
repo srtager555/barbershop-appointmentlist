@@ -4,14 +4,14 @@
  * @returns {appointmentData[]} Will return the appointment array without the first closed times
  */
 export function AppointmentReducer(data: Array<appointmentData>): appointmentData[] | "closed" {
-	const OpeningTime = data.find((el) => el.state === "open");
+	const OpeningTime = data.find((el) => el.state === "open" || el.state === "busy");
 	let OpeningTimeIndex: number;
 	let lastClosedTimeIndex: number;
 	let ArrayClosedTime: appointmentData[] = [];
 
 	// here will remove the first hour closed and the last hours closed
 	if (OpeningTime) {
-		OpeningTimeIndex = data.indexOf(OpeningTime);
+		OpeningTimeIndex = data.indexOf(OpeningTime)
 		data = data.splice(OpeningTimeIndex);
 	}
 
@@ -24,7 +24,7 @@ export function AppointmentReducer(data: Array<appointmentData>): appointmentDat
 
 	data.forEach((element) => {
 		if (ArrayClosedTime.length > 0) {
-			if (element.state != "open") return ArrayClosedTime.push(element);
+			if (["open", "busy"].every((el) => element.state != el)) return ArrayClosedTime.push(element);
 
 			const startClosedTime = data.indexOf(ArrayClosedTime[0]);
 
