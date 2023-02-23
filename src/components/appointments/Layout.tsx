@@ -1,7 +1,7 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 
 import { NextPage } from "next";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import { ClosedTimeBTN } from "./ClosedTime.btn";
 import { BusyTimeBTN } from "./BusyTime.btn";
@@ -11,6 +11,7 @@ import { LoadingTime } from "./LoadingTime";
 
 import styles from "@styles/citas.module.scss";
 import ClosedDay from "./ClosedDay";
+import { TODAY_CUSTOM } from "@common/timeData";
 
 const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
@@ -29,7 +30,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 				<ClosedDay />
 			) : (
 				<>
-					<span className={styles["start-time"]}>{openning ? `Reservas del ${openning}` : "apertura"}</span>
+					<span onClick={() => signOut()} className={styles["start-time"]}>{openning ? `Reservas del ${openning}` : "apertura"}</span>
 					{data.map((appointment, index) => {
 						const KEY = `${index} - ${appointment.time}`;
 
@@ -37,6 +38,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 							index,
 							time: appointment.time,
 							stateStyles: stateStylesItalic,
+							date: openning ? openning : TODAY_CUSTOM
 						};
 
 						if (appointment.state === "loading")
@@ -46,7 +48,6 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 								</div>
 							);
 
-							console.log(session?.user?.id, session?.user)
 						if (appointment.user_id === session?.user?.id)
 							return (
 								<div className={styles["appointment-btn__container"]} key={KEY}>
@@ -80,7 +81,6 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 						return (
 							<div className={styles["appointment-btn__container"]} key={KEY}>
 								<AvailableTimeBTN
-									callback={() => console.log("nice")}
 									{...PROPS}
 									stateStyles={stateStyles}
 								/>
