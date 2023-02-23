@@ -25,6 +25,7 @@ interface appointmentData {
 interface appointmentsButtons {
 	time: Time;
 	stateStyles: string;
+	date: string;
 	callback?: Function;
 }
 
