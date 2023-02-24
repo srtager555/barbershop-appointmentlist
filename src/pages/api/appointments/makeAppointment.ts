@@ -10,7 +10,7 @@ export default async function MakeAppointment(req: NextApiRequest, res: NextApiR
     }
   })
 
-  if (!isThereAnAppointment && createNewAppoint) {
+  if (!isThereAnAppointment || createNewAppoint) {
     await Prisma?.appointments.delete({
       where: {
         user_id
@@ -26,7 +26,7 @@ export default async function MakeAppointment(req: NextApiRequest, res: NextApiR
     })
 
     res.status(200).json(data)
+  } else {
+    res.status(200).json({ hasAppointment: true, time, user_id, date })
   }
-  
-  res.status(200).json({ hasAppointment: true, time, user_id, date })
 }
