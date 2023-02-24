@@ -3,6 +3,15 @@ import { NextApiResponse, NextApiRequest } from "next";
 
 export default async function MakeAppointment(req: NextApiRequest, res: NextApiResponse) {
   const { time, user_id, date, createNewAppoint }: AppointAPIBody = JSON.parse(req.body)
+  let data;
+
+  if (createNewAppoint) {
+    await Prisma?.appointments.delete({
+      where: {
+        user_id
+      }
+    })
+  }
 
   const isThereAnAppointment = await Prisma?.appointments.findUnique({
     where: {
@@ -10,23 +19,16 @@ export default async function MakeAppointment(req: NextApiRequest, res: NextApiR
     }
   })
 
-  if (!isThereAnAppointment || createNewAppoint) {
-    await Prisma?.appointments.delete({
-      where: {
-        user_id
-      }
-    })
-
-    const data = await Prisma?.appointments.create({
+  if (isThereAnAppointment) data = { hasAppointment: true }
+  else {
+    data = await Prisma?.appointments.create({
       data: {
         time,
         user_id,
         date
       }
     })
-
-    res.status(200).json(data)
-  } else {
-    res.status(200).json({ hasAppointment: true, time, user_id, date })
   }
+  
+  res.status(200).json(data)
 }
