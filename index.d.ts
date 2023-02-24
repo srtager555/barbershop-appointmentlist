@@ -49,7 +49,7 @@ interface AppointAPIBody {
   createNewAppoint?: boolean;
 }
 
-interface AppointAPIResponse extends Omit<AppointAPIBody, "createNewAppoint"> {
+interface AppointAPIResponse {
 	hasAppointment: boolean;
 }
 
