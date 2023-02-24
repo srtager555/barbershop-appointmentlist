@@ -15,6 +15,21 @@ export const months = [
 	"Diciembre",
 ];
 
+export const monthsEnglish = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"Octuber",
+	"November",
+	"December",
+];
+
 
 export const TODAY = new Date();
 
