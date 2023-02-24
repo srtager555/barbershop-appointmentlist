@@ -42,6 +42,17 @@ interface customClosedTime {
 	time: Time;
 }
 
+interface AppointAPIBody {
+	time: string; 
+  user_id: number; 
+  date: string;
+  createNewAppoint?: boolean;
+}
+
+interface AppointAPIResponse extends Omit<AppointAPIBody, "createNewAppoint"> {
+	hasAppointment: boolean;
+}
+
 type time =
 	| string
 	| '00"00'
