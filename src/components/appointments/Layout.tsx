@@ -2,16 +2,17 @@ import { Noto_Sans_Display as m } from "@next/font/google";
 
 import { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
+import { useState, useEffect, useCallback } from "react";
 
 import { ClosedTimeBTN } from "./ClosedTime.btn";
 import { BusyTimeBTN } from "./BusyTime.btn";
 import { UserTimeBTN } from "./UserTime.btn";
 import { AvailableTimeBTN } from "./AvailableTime.btn";
 import { LoadingTime } from "./LoadingTime";
+import { TODAY_CUSTOM } from "@common/timeData";
 
 import styles from "@styles/citas.module.scss";
 import ClosedDay from "./ClosedDay";
-import { TODAY_CUSTOM } from "@common/timeData";
 
 const noto = m({ weight: ["400"], subsets: ["latin"] });
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
@@ -20,20 +21,45 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 	data,
 	openning,
 }) => {
+	const [dataToPrint, setDataToPrint] = useState<appointmentData[] | "closed">(data);
 	const { data: session } = useSession();
 	const stateStyles = `${noto.className} ${styles.state}`;
 	const stateStylesItalic = `${notoI.className} ${styles.state}`;
 
+	const handlerUpgradedAppointList = useCallback(async () => {
+		const URL = openning ? "tomorrow" : "hoy";
+
+		const DATA = await fetch(
+			`/api/appointments/${URL}`,
+			openning
+				? {
+						method: "POST",
+						body: JSON.stringify({ date: openning }),
+				  }
+				: {}
+		).then((data) => data.json());
+
+		if (JSON.stringify(dataToPrint) != JSON.stringify(DATA)) setDataToPrint(DATA);
+	}, [openning, dataToPrint]);
+
+	useEffect(() => {
+		const INTERVAL = setInterval(() => handlerUpgradedAppointList(), 1000);
+
+		return () => {
+			clearInterval(INTERVAL);
+		};
+	}, [handlerUpgradedAppointList]);
+
 	return (
 		<div className={styles["container-appointments"]}>
-			{data === "closed" ? (
+			{dataToPrint === "closed" ? (
 				<ClosedDay />
 			) : (
 				<>
 					<span onClick={() => signOut()} className={styles["start-time"]}>
 						{openning ? `Reservas del ${openning}` : "apertura"}
 					</span>
-					{data.map((appointment, index) => {
+					{dataToPrint.map((appointment, index) => {
 						const KEY = `${index} - ${appointment.time}`;
 
 						const PROPS = {
@@ -41,6 +67,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 							time: appointment.time,
 							stateStyles: stateStylesItalic,
 							date: openning ? openning : TODAY_CUSTOM,
+							callback: handlerUpgradedAppointList,
 						};
 
 						if (appointment.state === "loading")
@@ -55,8 +82,8 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 								return (
 									<div className={styles["appointment-btn__container"]} key={KEY}>
 										<UserTimeBTN
-											callback={() => console.log("nope")}
 											{...PROPS}
+											callback={() => console.log("nope")}
 										/>
 									</div>
 								);
@@ -66,8 +93,8 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 							return (
 								<div className={styles["appointment-btn__container"]} key={KEY}>
 									<ClosedTimeBTN
-										callback={() => console.log("nope")}
 										{...PROPS}
+										callback={() => console.log("nope")}
 									/>
 								</div>
 							);
@@ -76,8 +103,8 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 							return (
 								<div className={styles["appointment-btn__container"]} key={KEY}>
 									<BusyTimeBTN
-										callback={() => console.log("ocupado")}
 										{...PROPS}
+										callback={() => console.log("ocupado")}
 									/>
 								</div>
 							);
