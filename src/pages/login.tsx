@@ -3,18 +3,18 @@ import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 
-import styles from "@styles/login.module.scss"
+import styles from "@styles/Form.module.scss";
 import Form from "@components/form";
 
 const Login: NextPage = () => {
 	const [loading, setLoading] = useState(false);
-	const [errorChecker, setErrorChecker] = useState({ ok: true, error: "" })
+	const [errorChecker, setErrorChecker] = useState({ ok: true, error: "" });
 	const router = useRouter();
 
 	const checkData = async (e: FormEvent) => {
 		e.preventDefault();
 		setLoading(true);
-    
+
 		signIn("credentials", {
 			redirect: false,
 			// @ts-ignore
@@ -36,7 +36,6 @@ const Login: NextPage = () => {
 	return (
 		<div className={`${styles.container} ${loading ? styles.laoding : ""}`}>
 			<Form type="login" callback={checkData} />
-			
 		</div>
 	);
 };
