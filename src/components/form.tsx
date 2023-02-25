@@ -4,15 +4,15 @@ import Link from "next/link";
 import styles from "@styles/Form.module.scss";
 
 const Form = ({ type, callback }: { type: "login" | "regis"; callback: Function }) => (
-	<div className={styles["form-container"]}>
-		<h2>{type === "login" ? "Inicia Sesion" : "Crea una cuenta"}</h2>
-		<form onSubmit={(e: FormEvent) => callback(e)}>
+	<>
+		<h2 className={styles.title}>{type === "login" ? "Inicia Sesion" : "Crea una cuenta"}</h2>
+		<form className={styles["form"]} onSubmit={(e: FormEvent) => callback(e)}>
 			{type === "login" ? (
 				""
 			) : (
 				<>
 					<p>Ingreda tu nombre</p>
-					<input id="name" name="name" type="name" required />
+					<input id="name" name="name" type="text" required />
 				</>
 			)}
 			<p>number</p>
@@ -31,7 +31,7 @@ const Form = ({ type, callback }: { type: "login" | "regis"; callback: Function 
 		<Link href={type === "login" ? "/registrar" : "/login"}>
 			{type === "login" ? "Crear cuenta" : "¿Ya tienes una cuenta?"}
 		</Link>
-	</div>
+	</>
 );
 
 export default Form;
