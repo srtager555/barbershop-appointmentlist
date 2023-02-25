@@ -60,11 +60,15 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 	useEffect(() => {
 		setAvailableTime(VALID_TIME_TO_APPOINT(time, date));
 
-		setInterval(() => {
+		const INTERVAL = setInterval(() => {
 			const VALID = VALID_TIME_TO_APPOINT(time, date);
 
 			if (VALID != availableTime) setAvailableTime(VALID);
 		}, 10000);
+
+		return () => {
+			clearInterval(INTERVAL);
+		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
