@@ -83,7 +83,6 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 									<div className={styles["appointment-btn__container"]} key={KEY}>
 										<UserTimeBTN
 											{...PROPS}
-											callback={() => console.log("nope")}
 										/>
 									</div>
 								);
