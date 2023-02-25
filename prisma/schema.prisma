@@ -17,6 +17,7 @@ model users {
   appointment Int?   @unique
   password    String
   role        String @default("user")
+  image       String @db.VarChar(255)
 }
 
 model layout_day {
