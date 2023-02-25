@@ -1,18 +1,27 @@
 import { week } from "@common/timeData";
 
-export const OPENING_CLOSING = async (n: number) => {
-	return (
+export const LAYOUT_DAY = async (date: string) => {
+	const DAY_NUMBER = new Date(date).getDay();
+
+	const BASE =
 		(await Prisma?.layout_day.findUnique({
 			where: {
-				day: week[n],
+				day: week[DAY_NUMBER],
 			},
 		})) ||
 		(await Prisma?.layout_day.findUnique({
 			where: {
 				day: "default",
 			},
-		}))
-	);
+		}));
+
+	const CUSTOM_BASE = await Prisma?.custom_oc.findUnique({
+		where: {
+			date,
+		},
+	});
+
+	return CUSTOM_BASE ? CUSTOM_BASE : BASE;
 };
 
 export const DATE_APOINTMENTS = async (date: string) =>
