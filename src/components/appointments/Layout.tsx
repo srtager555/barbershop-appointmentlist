@@ -64,7 +64,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 
 				if (element.children.length > 0) {
 					// @ts-ignore
-					if (element.children[0].disabled) {
+					if (element.children[0].disabled === false) {
 						element.scrollIntoView({
 							block: "center",
 							behavior: "smooth",
