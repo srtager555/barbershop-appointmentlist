@@ -2,7 +2,7 @@ import { Noto_Sans_Display as m } from "@next/font/google";
 
 import { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 import { ClosedTimeBTN } from "./ClosedTime.btn";
 import { BusyTimeBTN } from "./BusyTime.btn";
@@ -21,8 +21,11 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 	data,
 	openning,
 }) => {
-	const [dataToPrint, setDataToPrint] = useState<appointmentData[] | "closed">(data);
 	const { data: session } = useSession();
+	const btnContainer = useRef<HTMLDivElement>(document.createElement("div"));
+
+	const [dataToPrint, setDataToPrint] = useState<appointmentData[] | "closed">(data);
+
 	const stateStyles = `${noto.className} ${styles.state}`;
 	const stateStylesItalic = `${notoI.className} ${styles.state}`;
 
@@ -50,8 +53,32 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 		};
 	}, [handlerUpgradedAppointList]);
 
+	useEffect(() => {
+		setTimeout(() => {
+			const APPOINTMENTS = btnContainer.current.children;
+
+			for (let index = 0; index < APPOINTMENTS.length; index++) {
+				const element = APPOINTMENTS.item(index);
+
+				if (!element) return;
+
+				if (element.children.length > 0) {
+					// @ts-ignore
+					if (element.children[0].disabled) {
+						element.scrollIntoView({
+							block: "center",
+							behavior: "smooth",
+						});
+
+						break;
+					}
+				}
+			}
+		}, 100);
+	}, []);
+
 	return (
-		<div className={styles["container-appointments"]}>
+		<div ref={btnContainer} className={styles["container-appointments"]}>
 			{dataToPrint === "closed" ? (
 				<ClosedDay />
 			) : (
@@ -81,9 +108,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 							if (appointment.user_id === session?.user?.id)
 								return (
 									<div className={styles["appointment-btn__container"]} key={KEY}>
-										<UserTimeBTN
-											{...PROPS}
-										/>
+										<UserTimeBTN {...PROPS} />
 									</div>
 								);
 						}
