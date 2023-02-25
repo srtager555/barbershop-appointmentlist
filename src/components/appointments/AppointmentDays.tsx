@@ -1,10 +1,9 @@
-import { TODAY, months, week } from "@common/timeData";
+import { TODAY, week, monthsEnglish } from "@common/timeData";
 import { ButtonToTop } from "@common/ButtonToTop";
 
 import styles from "@styles/depues.module.scss";
 
 export function AppointmentDays({ setDataDays, setOpenning }: any) {
-
 	function handlerCreateDate(daysToPlus: number) {
 		let date = TODAY.getDate() + daysToPlus;
 		let month = TODAY.getUTCMonth();
@@ -38,21 +37,21 @@ export function AppointmentDays({ setDataDays, setOpenning }: any) {
 			year = year + 1;
 		}
 
-		return `${months[month]} ${date} ${year}`;
+		return `${monthsEnglish[month]} ${date} ${year}`;
 	}
 
 	async function handlerSetDate(n: number) {
 		const fecha = handlerCreateDate(n);
-		
+
 		const DATA = await fetch(`/api/appointments/tomorrow`, {
 			method: "POST",
 			body: JSON.stringify({ date: fecha }),
-		}).then((data) => data.json())
+		}).then((data) => data.json());
 
 		setDataDays(DATA);
-		setOpenning(fecha)
-		
-		window.scrollTo({ top: 0, behavior: 'smooth'})
+		setOpenning(fecha);
+
+		window.scrollTo({ top: 0, behavior: "smooth" });
 	}
 
 	return (
