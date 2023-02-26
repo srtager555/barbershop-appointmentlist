@@ -7,10 +7,80 @@
 	justify-content: center;
 
 	.title {
-		margin-bottom: 20px;
+		text-align: center;
+		margin-bottom: 40px;
+
+		.cta {
+			display: inline-block;
+			padding: 20px 0;
+			text-decoration: underline;
+			border-radius: 10px;
+			transition: 400ms;
+
+			&:active {
+				transform: scale(0.9);
+				background-color: #ccc;
+			}
+		}
 	}
 
 	.form {
-		width: 100%;
+		width: 80%;
+		margin: 0 auto;
+
+		.inputContainer {
+			position: relative;
+			border-bottom: 1px solid var(--custom-black);
+			margin-bottom: 75px;
+
+			.name {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				white-space: nowrap;
+				transform: translate(-50%, -50%);
+				transition: 400ms;
+				z-index: 9;
+				pointer-events: none;
+			}
+
+			.input {
+				display: block;
+				width: 100%;
+				padding: 15px 0;
+				font-size: 18px;
+				border: none;
+				background-color: transparent;
+				box-sizing: border-box;
+				opacity: 0;
+				transition: 400ms;
+
+				&:focus {
+					opacity: 1;
+
+					& ~ .name {
+						top: -25%;
+						transform: translate(-50%, -50%) scale(0.9);
+					}
+				}
+			}
+		}
+
+		.btn-action {
+			display: inline-block;
+			padding: 20px 10px;
+			font-family: inherit;
+			font-size: 1.2rem;
+			background: none;
+			border: none;
+			border-bottom: 1px solid var(--custom-black);
+			cursor: pointer;
+			transition: 200ms;
+
+			&:active {
+				transform: scale(0.9);
+				background-color: #ccc;
+			}
+		}
 	}
 }
