@@ -3,7 +3,7 @@ import { ButtonToTop } from "@common/ButtonToTop";
 
 import styles from "@styles/depues.module.scss";
 
-export function AppointmentDays({ setDataDays, setOpenning }: any) {
+export function AppointmentDays({ setDataDays, setOpening }: any) {
 	function handlerCreateDate(daysToPlus: number) {
 		let date = TODAY.getDate() + daysToPlus;
 		let month = TODAY.getUTCMonth();
@@ -49,7 +49,7 @@ export function AppointmentDays({ setDataDays, setOpenning }: any) {
 		}).then((data) => data.json());
 
 		setDataDays(DATA);
-		setOpenning(fecha);
+		setOpening(fecha);
 
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	}

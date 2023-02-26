@@ -1,17 +1,16 @@
-import { TODAY } from "@common/timeData"
-import { AppointmentDays } from "@components/appointments/AppointmentDays"
-import Layout from "@components/appointments/Layout"
-import { NextPage } from "next"
+import { NextPage } from "next";
+import { useState } from "react";
 
-import { useState } from "react"
+import { AppointmentDays } from "@components/appointments/AppointmentDays";
+import Layout from "@components/appointments/Layout";
 
 const Despues: NextPage = () => {
-  const [dataDays, setDataDays] = useState<appointmentData[] | "closed">()
-  const [openning, setOpenning] = useState<string>()
+	const [dataDays, setDataDays] = useState<appointmentData[] | "closed">();
+	const [opening, setOpening] = useState<string>();
 
-  if (!dataDays) return <AppointmentDays setDataDays={setDataDays} setOpenning={setOpenning} />
+	if (!dataDays) return <AppointmentDays setDataDays={setDataDays} setOpening={setOpening} />;
 
-  return <Layout data={dataDays} openning={openning} />
-}
+	return <Layout data={dataDays} opening={opening} />;
+};
 
-export default Despues
+export default Despues;
