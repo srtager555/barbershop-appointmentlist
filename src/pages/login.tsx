@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
 
-import styles from "@styles/Form.module.scss";
 import Form from "@components/form";
 
 const Login: NextPage = () => {
@@ -33,11 +32,7 @@ const Login: NextPage = () => {
 		});
 	};
 
-	return (
-		<div className={`${styles.container} ${loading ? styles.laoding : ""}`}>
-			<Form type="login" callback={checkData} />
-		</div>
-	);
+	return <Form type="login" callback={checkData} />;
 };
 
 export default Login;
