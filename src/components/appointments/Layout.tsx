@@ -1,50 +1,34 @@
-import { Noto_Sans_Display as m } from "@next/font/google";
-
 import { NextPage } from "next";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useState, useEffect, useCallback, useRef } from "react";
 
-import { ClosedTimeBTN } from "./ClosedTime.btn";
-import { BusyTimeBTN } from "./BusyTime.btn";
-import { UserTimeBTN } from "./UserTime.btn";
-import { AvailableTimeBTN } from "./AvailableTime.btn";
-import { LoadingTime } from "./LoadingTime";
-import { TODAY_CUSTOM } from "@common/timeData";
-
+import { Appointments } from "./Appointments";
 import styles from "@styles/citas.module.scss";
 import ClosedDay from "./ClosedDay";
 
-const noto = m({ weight: ["400"], subsets: ["latin"] });
-const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
-
-const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }> = ({
+const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }> = ({
 	data,
-	openning,
+	opening,
 }) => {
-	const { data: session } = useSession();
 	const btnContainer = useRef<HTMLDivElement>(document.createElement("div"));
 
 	const [dataToPrint, setDataToPrint] = useState<appointmentData[] | "closed">(data);
 
-	const stateStyles = `${noto.className} ${styles.state}`;
-	const stateStylesItalic = `${notoI.className} ${styles.state}`;
-
 	const handlerUpgradedAppointList = useCallback(async () => {
-		const URL = openning ? "tomorrow" : "hoy";
+		const PATH = opening ? "tomorrow" : "hoy";
+		const URL = `/api/appointments/${PATH}`;
+		const OPTIONS_TOMORROW = {
+			method: "POST",
+			body: JSON.stringify({ date: opening }),
+		};
+		const OPTIONS = opening ? OPTIONS_TOMORROW : undefined;
 
-		const DATA = await fetch(
-			`/api/appointments/${URL}`,
-			openning
-				? {
-						method: "POST",
-						body: JSON.stringify({ date: openning }),
-				  }
-				: {}
-		).then((data) => data.json());
+		const DATA = await fetch(URL, OPTIONS).then((data) => data.json());
 
 		if (JSON.stringify(dataToPrint) != JSON.stringify(DATA)) setDataToPrint(DATA);
-	}, [openning, dataToPrint]);
+	}, [opening, dataToPrint]);
 
+	// I added an interval to listener the ddbb to check if is there new appointments
 	useEffect(() => {
 		const INTERVAL = setInterval(() => handlerUpgradedAppointList(), 1000);
 
@@ -53,6 +37,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 		};
 	}, [handlerUpgradedAppointList]);
 
+	// here the code will center the current available appointment
 	useEffect(() => {
 		setTimeout(() => {
 			const APPOINTMENTS = btnContainer.current.children;
@@ -60,18 +45,16 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 			for (let index = 0; index < APPOINTMENTS.length; index++) {
 				const element = APPOINTMENTS.item(index);
 
-				if (!element) return;
+				if (!element || element.children.length <= 0) return;
 
-				if (element.children.length > 0) {
-					// @ts-ignore
-					if (element.children[0].disabled === false) {
-						element.scrollIntoView({
-							block: "center",
-							behavior: "smooth",
-						});
+				// @ts-ignore
+				if (element.children[0].disabled === false) {
+					element.scrollIntoView({
+						block: "center",
+						behavior: "smooth",
+					});
 
-						break;
-					}
+					break;
 				}
 			}
 		}, 100);
@@ -84,61 +67,13 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; openning?: string }
 			) : (
 				<>
 					<span onClick={() => signOut()} className={styles["start-time"]}>
-						{openning ? `Reservas del ${openning}` : "apertura"}
+						{opening ? `Reservas del ${opening}` : "apertura"}
 					</span>
-					{dataToPrint.map((appointment, index) => {
-						const KEY = `${index} - ${appointment.time}`;
-
-						const PROPS = {
-							index,
-							time: appointment.time,
-							stateStyles: stateStylesItalic,
-							date: openning ? openning : TODAY_CUSTOM,
-							callback: handlerUpgradedAppointList,
-						};
-
-						if (appointment.state === "loading")
-							return (
-								<div className={styles["appointment-btn__container"]} key={KEY}>
-									<LoadingTime {...PROPS} />
-								</div>
-							);
-
-						if (session) {
-							if (appointment.user_id === session?.user?.id)
-								return (
-									<div className={styles["appointment-btn__container"]} key={KEY}>
-										<UserTimeBTN {...PROPS} />
-									</div>
-								);
-						}
-
-						if (appointment.state === "close")
-							return (
-								<div className={styles["appointment-btn__container"]} key={KEY}>
-									<ClosedTimeBTN
-										{...PROPS}
-										callback={() => console.log("nope")}
-									/>
-								</div>
-							);
-
-						if (appointment.state === "busy")
-							return (
-								<div className={styles["appointment-btn__container"]} key={KEY}>
-									<BusyTimeBTN
-										{...PROPS}
-										callback={() => console.log("ocupado")}
-									/>
-								</div>
-							);
-
-						return (
-							<div className={styles["appointment-btn__container"]} key={KEY}>
-								<AvailableTimeBTN {...PROPS} stateStyles={stateStyles} />
-							</div>
-						);
-					})}
+					<Appointments
+						opening={opening}
+						dataToPrint={dataToPrint}
+						UpgradedAppointList={handlerUpgradedAppointList}
+					/>
 				</>
 			)}
 		</div>
