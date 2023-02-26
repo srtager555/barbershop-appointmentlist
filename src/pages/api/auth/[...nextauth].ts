@@ -44,15 +44,17 @@ export default NextAuth({
 			// Send properties to the client, like an access_token and user id from a provider.
 			const user = await Prisma.users.findUnique({
 				where: {
-					id: Number(token.sub)
-				}
-			})
+					id: Number(token.sub),
+				},
+			});
 
-			if (!user) return session
+			if (!user) return session;
 
-			session.user.id = user?.id
-			session.user.phone = user?.phone
-			session.user.role = user?.role
+			session.user.id = user?.id;
+			session.user.phone = user?.phone;
+			session.user.name = user?.name;
+			session.user.image = user?.image;
+			session.user.role = user?.role;
 
 			return session;
 		},
