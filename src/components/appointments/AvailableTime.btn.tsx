@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { VALID_TIME_TO_APPOINT } from "@common/timeData";
+import { VALITD_TIME_LISTENER } from "src/utils/expiredAppointmentChecker";
 
 import Swal from "sweetalert2";
 import styles from "@styles/citas.module.scss";
@@ -58,16 +58,10 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 	};
 
 	useEffect(() => {
-		setAvailableTime(VALID_TIME_TO_APPOINT(time, date));
-
-		const INTERVAL = setInterval(() => {
-			const VALID = VALID_TIME_TO_APPOINT(time, date);
-
-			if (VALID != availableTime) setAvailableTime(VALID);
-		}, 10000);
+		const LISTENER = VALITD_TIME_LISTENER({ time, date, availableTime, setAvailableTime });
 
 		return () => {
-			clearInterval(INTERVAL);
+			clearInterval(LISTENER);
 		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

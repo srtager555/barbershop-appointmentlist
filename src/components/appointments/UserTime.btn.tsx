@@ -1,10 +1,13 @@
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { VALITD_TIME_LISTENER } from "src/utils/expiredAppointmentChecker";
 
-import styles from "@styles/citas.module.scss";
 import Swal from "sweetalert2";
+import styles from "@styles/citas.module.scss";
 
-export const UserTimeBTN = ({ time, stateStyles, callback }: appointmentsButtons) => {
+export const UserTimeBTN = ({ time, stateStyles, callback, date }: appointmentsButtons) => {
 	const { data: session } = useSession();
+	const [availableTime, setAvailableTime] = useState(false);
 
 	const handlerDropAppointment = async () => {
 		Swal.fire({
@@ -30,10 +33,21 @@ export const UserTimeBTN = ({ time, stateStyles, callback }: appointmentsButtons
 		});
 	};
 
+	useEffect(() => {
+		const LISTENER = VALITD_TIME_LISTENER({ time, date, availableTime, setAvailableTime });
+
+		return () => {
+			clearInterval(LISTENER);
+		};
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<button
 			onClick={handlerDropAppointment}
 			className={`${styles["appointment-btn"]} ${styles.user}`}
+			disabled={availableTime}
 		>
 			<span className={styles.time}>{time}</span>
 			<span className={styles.line}></span>
