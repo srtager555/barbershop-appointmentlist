@@ -2,6 +2,7 @@ import { FormEvent } from "react";
 import Link from "next/link";
 
 import styles from "@styles/Form.module.scss";
+import indexStyles from "@styles/index.module.scss";
 
 const Form = ({ type, callback }: { type: "login" | "regis"; callback: Function }) => (
 	<div className={`${styles.container}`}>
@@ -53,7 +54,7 @@ const Form = ({ type, callback }: { type: "login" | "regis"; callback: Function 
 				/>
 				<span className={styles.name}>Tu contraseña</span>
 			</div>
-			<button className={styles["btn-action"]}>
+			<button className={indexStyles["btn-action"]}>
 				{type === "login" ? "Buscar cuenta" : "Crear cuenta"}
 			</button>
 		</form>
