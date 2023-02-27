@@ -65,22 +65,5 @@
 				}
 			}
 		}
-
-		.btn-action {
-			display: inline-block;
-			padding: 20px 10px;
-			font-family: inherit;
-			font-size: 1.2rem;
-			background: none;
-			border: none;
-			border-bottom: 1px solid var(--custom-black);
-			cursor: pointer;
-			transition: 200ms;
-
-			&:active {
-				transform: scale(0.9);
-				background-color: #ccc;
-			}
-		}
 	}
 }
