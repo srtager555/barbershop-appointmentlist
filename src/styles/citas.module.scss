@@ -23,6 +23,14 @@
 		pointer-events: none;
 	}
 
+	&.user {
+		padding-top: 10px;
+
+		&::after {
+			content: none;
+		}
+	}
+
 	.start-time {
 		display: flex;
 		justify-content: center;
@@ -41,6 +49,7 @@
 			background-color: var(--custom-black);
 		}
 	}
+
 	.appointment-btn__container {
 		width: 100%;
 		margin-bottom: 35px;
