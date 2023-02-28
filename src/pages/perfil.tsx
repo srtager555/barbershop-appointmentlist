@@ -73,12 +73,16 @@ const Profile: NextPage = () => {
 				<button className={indexStyles["btn-action"]} onClick={handlerSignOut}>
 					Cerrar sesión
 				</button>
-				<button
-					className={`${indexStyles["btn-action"]} ${indexStyles.warn}`}
-					onClick={() => handlerCloseAccount(session?.user.id)}
-				>
-					Cerrar cuenta
-				</button>
+				{session ? (
+					<button
+						className={`${indexStyles["btn-action"]} ${indexStyles.warn}`}
+						onClick={() => handlerCloseAccount(session?.user.id)}
+					>
+						Cerrar cuenta
+					</button>
+				) : (
+					<></>
+				)}
 			</div>
 		</div>
 	);
