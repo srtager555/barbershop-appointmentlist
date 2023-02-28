@@ -9,8 +9,8 @@
 	"start_url": "/",
 	"icons": [
 		{
-			"src": "/bigoteJossie./png",
-			"sizes": "48x48"
+			"src": "/bigote-pwa.png",
+			"sizes": "170x170"
 		}
 	]
 }
