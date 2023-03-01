@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import Swal from "sweetalert2";
 
 export const handlerCloseAccount = (user_id: user_id) => {
@@ -13,9 +14,15 @@ export const handlerCloseAccount = (user_id: user_id) => {
 		showCancelButton: true,
 		cancelButtonText: "Cancelar",
 	}).then(async (data) => {
-		const USER = await fetch("/api/appointments/dropAccount", {
+		if (!data.isConfirmed) return;
+
+		await fetch("/api/appointments/dropAccount", {
 			method: "POST",
 			body: JSON.stringify({ user_id }),
+		}).then((data) => {
+			if (data.ok) {
+				signOut();
+			}
 		});
 	});
 };
