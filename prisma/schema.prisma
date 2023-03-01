@@ -11,13 +11,12 @@ datasource db {
 }
 
 model users {
-  id          Int    @id @default(autoincrement())
-  name        String
-  phone       String @unique
-  appointment Int?   @unique
-  password    String
-  role        String @default("user")
-  image       Bytes? @db.MediumBlob
+  id       Int    @id @default(autoincrement())
+  name     String
+  phone    String @unique
+  password String
+  role     String @default("user")
+  image    Bytes? @db.ByteA
 }
 
 model layout_day {
@@ -25,7 +24,7 @@ model layout_day {
   day     String  @unique @db.VarChar(9)
   opening String  @db.VarChar(5)
   closing String  @db.VarChar(5)
-  closed  Boolean @db.TinyInt
+  closed  Boolean @db.Boolean
 }
 
 model custom_oc {
@@ -33,7 +32,7 @@ model custom_oc {
   date    String  @unique @db.VarChar(45)
   opening String  @db.VarChar(5)
   closing String  @db.VarChar(5)
-  closed  Boolean @db.TinyInt
+  closed  Boolean @db.Boolean
 }
 
 model custom_closed_time {
