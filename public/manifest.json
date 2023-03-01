@@ -1,7 +1,7 @@
 {
 	"name": "BS Jossiel",
 	"short_name": "Jossiel",
-	"theme_color": "#FFFFFF",
+	"theme_color": "#000",
 	"background_color": "#E5E5E5",
 	"display": "fullscreen",
 	"orientation": "portrait",
