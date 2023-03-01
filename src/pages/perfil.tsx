@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 
 import { Loader } from "@common/Loader";
 import { UserTimeBTN } from "@components/appointments/UserTime.btn";
-import { handlerCloseAccount } from "src/utils/closeAccount";
-import { handlerSignOut } from "src/utils/signOut";
+import { handlerCloseAccount } from "@utils/dropAccount";
+import { handlerSignOut } from "@utils/signOut";
 import Image from "next/image";
 
 import Link from "next/link";
