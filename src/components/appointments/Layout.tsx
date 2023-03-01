@@ -30,7 +30,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }>
 
 	// I added an interval to listener the ddbb to check if is there new appointments
 	useEffect(() => {
-		const INTERVAL = setInterval(() => handlerUpgradedAppointList(), 1000);
+		const INTERVAL = setInterval(() => handlerUpgradedAppointList(), 3000);
 
 		return () => {
 			clearInterval(INTERVAL);
