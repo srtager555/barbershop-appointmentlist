@@ -1,5 +1,6 @@
 import { isExpiretAppointment } from "@common/expireAppointment";
 import { NextApiResponse, NextApiRequest } from "next";
+import { Prisma } from "@ddbb/prismadb";
 
 export default async function MakeAppointment(req: NextApiRequest, res: NextApiResponse) {
 	const { time, user_id, date, createNewAppoint }: AppointAPIBody = JSON.parse(req.body);
