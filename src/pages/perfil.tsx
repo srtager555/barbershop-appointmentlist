@@ -46,6 +46,9 @@ const Profile: NextPage = () => {
 		<div className={styles.container}>
 			<h1>{session?.user.name}</h1>
 			<p className={styles.number}>{session?.user.phone}</p>
+			{session?.user.role === "admin" && (
+				<small className={styles.message}>Eres administrador</small>
+			)}
 			<div className={`${stylesCitas["container-appointments"]} ${stylesCitas.user}`}>
 				<div className={stylesCitas["appointment-btn__container"]}>
 					{appointment?.data ? (
