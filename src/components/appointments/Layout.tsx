@@ -13,6 +13,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }>
 	const btnContainer = useRef<HTMLDivElement>(document.createElement("div"));
 
 	const [dataToPrint, setDataToPrint] = useState<appointmentData[] | "closed">(data);
+	const [firstTimeToScroll, setFirstTimeToScroll] = useState(true);
 
 	const handlerUpgradedAppointList = useCallback(async () => {
 		const PATH = opening ? "tomorrow" : "hoy";
@@ -39,26 +40,30 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }>
 
 	// here the code will center the current available appointment
 	useEffect(() => {
-		setTimeout(() => {
-			const APPOINTMENTS = btnContainer.current.children;
+		const APPOINTMENTS = btnContainer.current.children;
 
-			for (let index = 0; index < APPOINTMENTS.length; index++) {
-				const element = APPOINTMENTS.item(index);
+		if (data && firstTimeToScroll) {
+			setFirstTimeToScroll(false);
 
-				if (!element || element.children.length <= 0) return;
+			setTimeout(() => {
+				for (let index = 0; index < APPOINTMENTS.length; index++) {
+					const element = APPOINTMENTS.item(index);
 
-				// @ts-ignore
-				if (element.children[0].disabled === false) {
-					element.scrollIntoView({
-						block: "center",
-						behavior: "smooth",
-					});
+					if (element && element.children.length > 0) {
+						// @ts-ignore
+						if (element.children[0].disabled === false) {
+							element.scrollIntoView({
+								block: "center",
+								behavior: "smooth",
+							});
 
-					break;
+							break;
+						}
+					}
 				}
-			}
-		}, 100);
-	}, []);
+			}, 500);
+		}
+	}, [data, firstTimeToScroll]);
 
 	return (
 		<div ref={btnContainer} className={styles["container-appointments"]}>
