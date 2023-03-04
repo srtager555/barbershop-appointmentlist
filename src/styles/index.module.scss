@@ -15,6 +15,10 @@
 		background-color: #ccc;
 	}
 
+	&.profile {
+		padding: 12px 19px;
+	}
+
 	&.warn {
 		color: #fff;
 		background-color: var(--warn-color);
