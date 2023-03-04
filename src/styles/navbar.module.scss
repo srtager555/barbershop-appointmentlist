@@ -1,26 +1,39 @@
+.profile-link {
+	position: fixed;
+	top: 1%;
+	right: 15px;
+	display: inline-block;
+	z-index: 100;
+	transition: 1s;
+
+	&.hidden {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
 .container {
-  position: fixed;
-  top: 3%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  max-width: 450px;
-  transition: all 2s ease-in-out;
-  z-index: 99;
+	position: fixed;
+	top: 3%;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+	max-width: 450px;
+	transition: all 2s ease-in-out;
+	z-index: 99;
 
-  .custom-content {
-    width: 100%;
-  }
+	.custom-content {
+		width: 100%;
+	}
 
-  &.start {
-    top: 46%
-  }
+	&.start {
+		top: 46%;
+	}
 
-  &.appointments {
-    top: 3%
-  }
+	&.appointments {
+		top: 3%;
+	}
 }
