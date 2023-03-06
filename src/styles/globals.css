@@ -1,16 +1,17 @@
 :root {
-  --custom-black: #313030;
-  --disable-color: #E6F971;
-  --warn-color: #FB4C4C;
-  --white: #fff;
+	--custom-black: #313030;
+	--disable-color: #e6f971;
+	--warn-color: #fb4c4c;
+	--white: #fff;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  color: var(--custom-black)
+	margin: 0;
+	padding: 0;
+	color: var(--custom-black);
+	box-sizing: border-box;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
