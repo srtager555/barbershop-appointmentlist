@@ -71,7 +71,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }>
 				<ClosedDay />
 			) : (
 				<>
-					<span onClick={() => signOut()} className={styles["start-time"]}>
+					<span className={styles["start-time"]}>
 						{opening ? `Reservas del ${opening}` : "apertura"}
 					</span>
 					<Appointments
