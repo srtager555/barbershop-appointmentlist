@@ -17,7 +17,7 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 	const router = useRouter();
 	const { data: session, status } = useSession();
 
-	const handlerUseAppointment = async () => {
+	const handlerUserAppointment = async () => {
 		if (status === "unauthenticated" || !session) return router.push("/login");
 
 		const RESPONSE = await fetcher({
@@ -69,7 +69,7 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 
 	return (
 		<button
-			onClick={handlerUseAppointment}
+			onClick={handlerUserAppointment}
 			className={`${styles["appointment-btn"]}`}
 			disabled={availableTime}
 		>
