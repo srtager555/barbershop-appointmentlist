@@ -5,6 +5,7 @@ import { Session } from "next-auth/core/types";
 
 import styles from "@styles/citas.module.scss";
 import indexStyles from "@styles/index.module.scss";
+import { AdminDropAppointmentWarn } from "src/warns/dropAppointment.admin";
 
 interface btnProps {
 	callback?: Function;
@@ -15,13 +16,16 @@ interface btnProps {
 
 interface adminProps extends btnProps {
 	session: Session;
+	user_id: number | null;
 }
 
-export const BusyTimeBTN = (props: appointmentsButtons) => {
+interface BusyAppointmentProps extends appointmentsButtons {
+	user_id: number;
+}
+
+export const BusyTimeBTN = (props: BusyAppointmentProps) => {
 	const [availableTime, setAvailableTime] = useState(false);
-
 	const { data: session, status } = useSession();
-
 	const { time, date } = props;
 
 	useEffect(() => {
@@ -39,14 +43,29 @@ export const BusyTimeBTN = (props: appointmentsButtons) => {
 			return <AdminBtn session={session} availableTime={availableTime} {...props} />;
 
 		return <UserBtn availableTime={availableTime} {...props} />;
-	} else return <UserBtn availableTime={availableTime} {...props} />;
+	}
+
+	return <UserBtn availableTime={availableTime} {...props} />;
 };
 
-const AdminBtn = ({ time, stateStyles, session }: adminProps) => {
+const AdminBtn = ({ time, stateStyles, session, user_id }: adminProps) => {
 	const [showData, setShowData] = useState(false);
 
 	const handleShow = () => {
 		setShowData(!showData);
+	};
+
+	const handleDropAppointment = async () => {
+		const isConfirmed = AdminDropAppointmentWarn();
+
+		if (!isConfirmed) return;
+
+		fetch("/api/appointments/dropAppointment", {
+			method: "POST",
+			body: JSON.stringify({
+				user_id,
+			}),
+		});
 	};
 
 	return (
@@ -71,6 +90,7 @@ const AdminBtn = ({ time, stateStyles, session }: adminProps) => {
 					</a>
 					<button
 						className={`${indexStyles["btn-action"]} ${indexStyles.warn} ${indexStyles.small}`}
+						onClick={handleDropAppointment}
 					>
 						Cancelar reserva
 					</button>
