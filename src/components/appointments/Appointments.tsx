@@ -65,7 +65,11 @@ export const Appointments = ({ dataToPrint, opening, UpgradedAppointList }: Appo
 				if (appointment.state === "busy")
 					return (
 						<div className={styles["appointment-btn__container"]} key={KEY}>
-							<BusyTimeBTN {...PROPS} callback={() => console.log("ocupado")} />
+							<BusyTimeBTN
+								{...PROPS}
+								callback={() => console.log("ocupado")}
+								user_id={appointment.user_id}
+							/>
 						</div>
 					);
 
