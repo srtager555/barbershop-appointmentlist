@@ -3,19 +3,19 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Prisma } from "@ddbb/prismadb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { phone } = req.body;
+	const uid = req.query.uid as unknown as number | undefined;
 
-	if (phone) {
+	if (uid) {
 		const exists = await Prisma.users.findUnique({
 			where: {
-				phone,
+				id: Number(uid),
 			},
 		});
 
-		res.status(200).json({ exists, phone });
+		if (exists) {
+			res.status(200).json({ exists });
+		}
 	} else {
-		const users = await Prisma.users.findMany();
-
-		res.status(200).json({ hola: "hola", users, number: `xd ${phone}` });
+		res.status(500).json("No se encontro un usuario");
 	}
 }
