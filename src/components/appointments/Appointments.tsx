@@ -7,13 +7,13 @@ import { BusyTimeBTN } from "./BusyTime.btn";
 import { UserTimeBTN } from "./UserTime.btn";
 import { AvailableTimeBTN } from "./AvailableTime.btn";
 import { LoadingTime } from "./LoadingTime";
-import { TODAY_CUSTOM } from "@common/timeData";
+import { TODAY_CUSTOM_EN } from "@common/timeData";
 
 import styles from "@styles/citas.module.scss";
 
 interface AppointmentsProps {
 	dataToPrint: appointmentData[];
-	opening: string | undefined;
+	opening: { es: string; en: string } | undefined;
 	UpgradedAppointList: VoidFunction;
 }
 
@@ -35,7 +35,7 @@ export const Appointments = ({ dataToPrint, opening, UpgradedAppointList }: Appo
 					index,
 					time: appointment.time,
 					stateStyles: stateStylesItalic,
-					date: opening ? opening : TODAY_CUSTOM,
+					date: opening ? opening.en : TODAY_CUSTOM_EN,
 					callback: UpgradedAppointList,
 				};
 

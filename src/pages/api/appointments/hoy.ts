@@ -1,16 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { TimeList } from "@common/timeList";
-import { TODAY_CUSTOM, TODAY_CUSTOM_EN } from "@common/timeData";
+import { TODAY_CUSTOM_EN } from "@common/timeData";
 import { AppointmentReducer } from "@common/appointmentReducer";
 import { LAYOUT_DAY, DATE_APOINTMENTS, DATE_CLOSED_TIME } from "@ddbb/prisma.queries";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const OP_LAYOUT = await LAYOUT_DAY(TODAY_CUSTOM_EN);
 
-	const TODAY_APOINTMENTS = await DATE_APOINTMENTS(TODAY_CUSTOM);
+	const TODAY_APOINTMENTS = await DATE_APOINTMENTS(TODAY_CUSTOM_EN);
 
-	const TODAY_CLOSED_TIME = await DATE_CLOSED_TIME(TODAY_CUSTOM);
+	const TODAY_CLOSED_TIME = await DATE_CLOSED_TIME(TODAY_CUSTOM_EN);
 
 	const TODAY_LIST = TimeList(OP_LAYOUT, TODAY_APOINTMENTS, TODAY_CLOSED_TIME);
 

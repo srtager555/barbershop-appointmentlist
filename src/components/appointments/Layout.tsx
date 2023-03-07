@@ -1,33 +1,30 @@
-import { NextPage } from "next";
-import { signOut } from "next-auth/react";
 import { useState, useEffect, useCallback, useRef } from "react";
 
 import { Appointments } from "./Appointments";
 import styles from "@styles/citas.module.scss";
 import ClosedDay from "./ClosedDay";
 
-const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }> = ({
-	data,
-	opening,
-}) => {
+interface LayoutProps {
+	data: appointmentData[] | "closed";
+	opening?: { es: string; en: string };
+}
+
+const Layout = ({ data, opening }: LayoutProps) => {
 	const btnContainer = useRef<HTMLDivElement>(document.createElement("div"));
 
 	const [dataToPrint, setDataToPrint] = useState<appointmentData[] | "closed">(data);
 	const [firstTimeToScroll, setFirstTimeToScroll] = useState(true);
 
 	const handlerUpgradedAppointList = useCallback(async () => {
-		console.log("?");
-
 		const PATH = opening ? "tomorrow" : "hoy";
 		const URL = `/api/appointments/${PATH}`;
 		const OPTIONS_TOMORROW = {
 			method: "POST",
-			body: JSON.stringify({ date: opening }),
+			body: JSON.stringify({ date: opening?.en }),
 		};
 		const OPTIONS = opening ? OPTIONS_TOMORROW : undefined;
 
 		const DATA = await fetch(URL, OPTIONS).then((data) => data.json());
-		console.log(DATA);
 
 		if (JSON.stringify(dataToPrint) != JSON.stringify(DATA)) setDataToPrint(DATA);
 	}, [opening, dataToPrint]);
@@ -75,7 +72,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }>
 			) : (
 				<>
 					<span className={styles["start-time"]}>
-						{opening ? `Reservas del ${opening}` : "apertura"}
+						{opening ? `Reservas del ${opening.es}` : "apertura"}
 					</span>
 					<Appointments
 						opening={opening}

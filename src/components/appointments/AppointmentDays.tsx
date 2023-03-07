@@ -1,4 +1,4 @@
-import { TODAY, week, monthsEnglish } from "@common/timeData";
+import { TODAY, week, monthsEnglish, months } from "@common/timeData";
 import { ButtonToTop } from "@common/ButtonToTop";
 
 import styles from "@styles/depues.module.scss";
@@ -37,7 +37,10 @@ export function AppointmentDays({ setDataDays, setOpening }: any) {
 			year = year + 1;
 		}
 
-		return `${monthsEnglish[month]} ${date} ${year}`;
+		return {
+			en: `${monthsEnglish[month]} ${date} ${year}`,
+			es: `${months[month]} ${date} ${year}`,
+		};
 	}
 
 	async function handlerSetDate(n: number) {
@@ -45,7 +48,7 @@ export function AppointmentDays({ setDataDays, setOpening }: any) {
 
 		const DATA = await fetch(`/api/appointments/tomorrow`, {
 			method: "POST",
-			body: JSON.stringify({ date: fecha }),
+			body: JSON.stringify({ date: fecha.en }),
 		}).then((data) => data.json());
 
 		setDataDays(DATA);
@@ -60,7 +63,7 @@ export function AppointmentDays({ setDataDays, setOpening }: any) {
 			<p className={styles["example-text"]}>Selecciona uno de los siguientes días</p>
 			<div className={styles.container__button}>
 				{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((el) => {
-					const TIME = new Date(handlerCreateDate(el));
+					const TIME = new Date(handlerCreateDate(el).en);
 
 					return (
 						<button
