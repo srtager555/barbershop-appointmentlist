@@ -3,6 +3,7 @@ import { Prisma } from "./prismadb";
 
 export const LAYOUT_DAY = async (date: string) => {
 	const DAY_NUMBER = new Date(date).getDay();
+	console.log(DAY_NUMBER, date);
 
 	const BASE =
 		(await Prisma?.layout_day.findUnique({
