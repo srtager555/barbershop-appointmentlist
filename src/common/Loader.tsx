@@ -1,7 +1,7 @@
 import styles from "@styles/Loader.module.scss";
 
 interface loader {
-	isThereError: boolean;
+	isThereError?: boolean;
 }
 
 export const Loader = ({ isThereError }: loader) => (
