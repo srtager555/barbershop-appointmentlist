@@ -16,6 +16,8 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }>
 	const [firstTimeToScroll, setFirstTimeToScroll] = useState(true);
 
 	const handlerUpgradedAppointList = useCallback(async () => {
+		console.log("?");
+
 		const PATH = opening ? "tomorrow" : "hoy";
 		const URL = `/api/appointments/${PATH}`;
 		const OPTIONS_TOMORROW = {
@@ -25,6 +27,7 @@ const Layout: NextPage<{ data: appointmentData[] | "closed"; opening?: string }>
 		const OPTIONS = opening ? OPTIONS_TOMORROW : undefined;
 
 		const DATA = await fetch(URL, OPTIONS).then((data) => data.json());
+		console.log(DATA);
 
 		if (JSON.stringify(dataToPrint) != JSON.stringify(DATA)) setDataToPrint(DATA);
 	}, [opening, dataToPrint]);
