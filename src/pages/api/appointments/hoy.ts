@@ -9,15 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	const OP_LAYOUT = await LAYOUT_DAY(TODAY_CUSTOM_EN);
 
 	const TODAY_APOINTMENTS = await DATE_APOINTMENTS(TODAY_CUSTOM);
-	console.log(TODAY_APOINTMENTS);
 
 	const TODAY_CLOSED_TIME = await DATE_CLOSED_TIME(TODAY_CUSTOM);
-	console.log(TODAY_CLOSED_TIME);
 
 	const TODAY_LIST = TimeList(OP_LAYOUT, TODAY_APOINTMENTS, TODAY_CLOSED_TIME);
-	console.log(TODAY_LIST);
+
 	const PROCESS_TODAY = AppointmentReducer(TODAY_LIST);
-	console.log(PROCESS_TODAY);
 
 	res.status(200).json(PROCESS_TODAY);
 }
