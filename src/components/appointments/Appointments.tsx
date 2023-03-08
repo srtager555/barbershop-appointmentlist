@@ -30,6 +30,7 @@ export const Appointments = ({ dataToPrint, opening, UpgradedAppointList }: Appo
 		<>
 			{dataToPrint.map((appointment, index) => {
 				const KEY = `${index} - ${appointment.time}`;
+				const LAST_APPOINTMENT = index === dataToPrint.length - 1;
 
 				const PROPS = {
 					index,
@@ -55,10 +56,12 @@ export const Appointments = ({ dataToPrint, opening, UpgradedAppointList }: Appo
 						);
 				}
 
+				console.log(LAST_APPOINTMENT);
+
 				if (appointment.state === "close")
 					return (
 						<div className={styles["appointment-btn__container"]} key={KEY}>
-							<ClosedTimeBTN {...PROPS} callback={() => console.log("nope")} />
+							<ClosedTimeBTN {...PROPS} />
 						</div>
 					);
 
