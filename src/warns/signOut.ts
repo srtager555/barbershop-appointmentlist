@@ -6,7 +6,7 @@ export const handlerSignOut = () => {
 	Swal.fire({
 		title: "¡Ojo!",
 		text: "Cerraras la sesión actual",
-		icon: "info",
+		icon: "warning",
 		confirmButtonText: "Cerrar",
 		showCancelButton: true,
 		cancelButtonText: "Mejor no...",
