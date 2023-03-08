@@ -6,7 +6,7 @@ import { AppointmentReducer } from "@common/appointmentReducer";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const date: string = JSON.parse(req.body).date;
-	const rol: "admin" | "user" | undefined = JSON.parse(req.body).date;
+	const rol: "admin" | "user" | undefined = JSON.parse(req.body).rol;
 
 	if (!date) res.status(200).json("¿Que haces aquí?");
 
