@@ -21,7 +21,8 @@
 			"@components/*": ["src/components/*"],
 			"@ddbb/*": ["src/ddbb/*"],
 			"@utils/*": ["src/utils/*"],
-			"@error/*": ["src/error/*"]
+			"@errors/*": ["src/errors/*"],
+			"@warns/*": ["src/warns/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
