@@ -6,6 +6,8 @@ import { AppointmentReducer } from "@common/appointmentReducer";
 import { LAYOUT_DAY, DATE_APOINTMENTS, DATE_CLOSED_TIME } from "@ddbb/prisma.queries";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+	const rol: "admin" | "user" | undefined = JSON.parse(req.body).rol;
+
 	const OP_LAYOUT = await LAYOUT_DAY(TODAY_CUSTOM_EN);
 
 	const TODAY_APOINTMENTS = await DATE_APOINTMENTS(TODAY_CUSTOM_EN);
@@ -14,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 	const TODAY_LIST = TimeList(OP_LAYOUT, TODAY_APOINTMENTS, TODAY_CLOSED_TIME);
 
-	const PROCESS_TODAY = AppointmentReducer(TODAY_LIST);
+	const PROCESS_TODAY = AppointmentReducer(TODAY_LIST, rol);
 
 	res.status(200).json(PROCESS_TODAY);
 }
