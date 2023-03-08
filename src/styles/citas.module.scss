@@ -51,11 +51,19 @@
 
 	.appointment-btn__container {
 		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		width: 100%;
 		margin-bottom: 35px;
 
 		&:nth-last-child(1) {
 			margin-bottom: 0px;
+
+			.appointment-btn.close {
+				width: 110%;
+				padding-bottom: 50px;
+			}
 		}
 
 		.appointment-btn {
@@ -119,17 +127,10 @@
 			}
 
 			&.close {
-				position: absolute;
-				top: 0%;
-				left: 50%;
-				transform: translateX(-50%);
-				transform-origin: center center;
-				background-color: var(--custom-black);
-				// border-radius: ;
-				padding: 30px 40px;
-				padding-bottom: 50px;
-				cursor: auto;
 				width: 104%;
+				padding: 30px 40px;
+				cursor: auto;
+				background-color: var(--custom-black);
 
 				.line {
 					width: 115px;
@@ -140,7 +141,7 @@
 				}
 
 				&:active {
-					transform: translate(-50%) scale(1);
+					transform: scale(1);
 				}
 			}
 
