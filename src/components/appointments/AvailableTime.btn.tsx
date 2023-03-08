@@ -32,7 +32,7 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 	};
 
 	const handleCloseAndOpenAnAppointment = async () => {
-		await fetch("/api/appointments/closeOpenAppoinment", {
+		await fetch("/api/appointments/closeOpenAppointment", {
 			method: "POST",
 			body: JSON.stringify({
 				date,
