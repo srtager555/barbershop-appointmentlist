@@ -37,7 +37,7 @@ model custom_oc {
 
 model custom_closed_time {
   id   Int    @id @unique @default(autoincrement())
-  date String @unique @db.VarChar(45)
+  date String @db.VarChar(45)
   time String @db.VarChar(5)
 }
 
