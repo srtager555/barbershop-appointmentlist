@@ -43,7 +43,7 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return session?.user.role === "admin" ? (
+	return (status === "authenticated" && session.user.role) === "admin" ? (
 		<button
 			onClick={() => handlerCloseAndOpenAnAppointment(date, time)}
 			className={`${styles["appointment-btn"]}`}
