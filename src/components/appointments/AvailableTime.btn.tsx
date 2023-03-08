@@ -31,6 +31,16 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 		if (hasAppointment) ChangeAppointment({ callback, fetcher, time, date, session });
 	};
 
+	const handleCloseAndOpenAnAppointment = async () => {
+		await fetch("/api/appointments/closeOpenAppoinment", {
+			method: "POST",
+			body: JSON.stringify({
+				date,
+				time,
+			}),
+		});
+	};
+
 	useEffect(() => {
 		const LISTENER = VALITD_TIME_LISTENER({ time, date, availableTime, setAvailableTime });
 
@@ -41,7 +51,16 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return (
+	return session?.user.role === "admin" ? (
+		<button
+			onClick={handleCloseAndOpenAnAppointment}
+			className={`${styles["appointment-btn"]}`}
+		>
+			<span className={styles.time}>{time}</span>
+			<span className={styles.line}></span>
+			<span className={stateStyles}>Cerrar reserva</span>
+		</button>
+	) : (
 		<button
 			onClick={handlerUserAppointment}
 			className={`${styles["appointment-btn"]}`}
