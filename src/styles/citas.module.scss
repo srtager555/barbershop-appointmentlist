@@ -127,9 +127,9 @@
 			}
 
 			&.close {
-				width: 104%;
+				width: 100%;
 				padding: 30px 40px;
-				cursor: auto;
+				border-radius: 0px;
 				background-color: var(--custom-black);
 
 				.line {
