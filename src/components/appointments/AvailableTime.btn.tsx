@@ -3,8 +3,8 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { VALITD_TIME_LISTENER } from "src/utils/expiredAppointmentChecker";
 
-import Swal from "sweetalert2";
 import styles from "@styles/citas.module.scss";
+import { ChangeAppointment } from "@warns/changeAppointment";
 
 const fetcher = async (body: AppointAPIBody) =>
 	await fetch("/api/appointments/makeAppointment", {
@@ -28,33 +28,7 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 
 		const { hasAppointment }: AppointAPIResponse = await RESPONSE.json();
 
-		if (hasAppointment) {
-			Swal.fire({
-				icon: "info",
-				title: "¡Ya tienes una reserva!",
-				text: "Solo puedes tener una reserva a la vez",
-				confirmButtonText: "Cambiar reserva",
-				cancelButtonText: "Cancelar",
-				showCancelButton: true,
-			}).then(async (result) => {
-				if (result.isConfirmed) {
-					try {
-						await fetcher({
-							time,
-							date,
-							user_id: session.user.id,
-							createNewAppoint: true,
-						});
-
-						Swal.fire("Hecho!", "Tu reserva a sido cambiada", "success");
-						if (callback) callback();
-					} catch (error) {
-						Swal.fire("¡Algo fallo!", "Hubo une error al hacer la reserva", "error");
-						console.log(error);
-					}
-				}
-			});
-		}
+		if (hasAppointment) ChangeAppointment({ callback, fetcher, time, date, session });
 	};
 
 	useEffect(() => {
