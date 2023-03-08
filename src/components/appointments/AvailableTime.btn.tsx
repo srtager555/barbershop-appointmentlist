@@ -3,8 +3,10 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { VALITD_TIME_LISTENER } from "src/utils/expiredAppointmentChecker";
 
-import styles from "@styles/citas.module.scss";
 import { ChangeAppointment } from "@warns/changeAppointment";
+import { handlerCloseAndOpenAnAppointment } from "@utils/closeAndOpenAppoinment";
+
+import styles from "@styles/citas.module.scss";
 
 const fetcher = async (body: AppointAPIBody) =>
 	await fetch("/api/appointments/makeAppointment", {
@@ -31,16 +33,6 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 		if (hasAppointment) ChangeAppointment({ callback, fetcher, time, date, session });
 	};
 
-	const handleCloseAndOpenAnAppointment = async () => {
-		await fetch("/api/appointments/closeOpenAppointment", {
-			method: "POST",
-			body: JSON.stringify({
-				date,
-				time,
-			}),
-		});
-	};
-
 	useEffect(() => {
 		const LISTENER = VALITD_TIME_LISTENER({ time, date, availableTime, setAvailableTime });
 
@@ -53,7 +45,7 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 
 	return session?.user.role === "admin" ? (
 		<button
-			onClick={handleCloseAndOpenAnAppointment}
+			onClick={() => handlerCloseAndOpenAnAppointment(date, time)}
 			className={`${styles["appointment-btn"]}`}
 		>
 			<span className={styles.time}>{time}</span>
