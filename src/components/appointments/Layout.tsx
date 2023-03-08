@@ -24,7 +24,7 @@ const Layout = ({ data, opening }: LayoutProps) => {
 			method: "POST",
 			body: JSON.stringify({
 				date: opening?.en,
-				rol: status === "authenticated" ? session.user.role : undefined,
+				role: status === "authenticated" ? session.user.role : undefined,
 			}),
 		};
 

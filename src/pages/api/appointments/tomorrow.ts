@@ -6,7 +6,7 @@ import { AppointmentReducer } from "@common/appointmentReducer";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const date: string = JSON.parse(req.body).date;
-	const rol: "admin" | "user" | undefined = JSON.parse(req.body).rol;
+	const role: "admin" | "user" | undefined = JSON.parse(req.body).role;
 
 	if (!date) res.status(200).json("¿Que haces aquí?");
 
@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	const TODAY_CLOSED_TIME = await DATE_CLOSED_TIME(date);
 
 	const TODAY_LIST = TimeList(OP_LAYOUT, TODAY_APOINTMENTS, TODAY_CLOSED_TIME);
-	const PROCESS_TODAY = AppointmentReducer(TODAY_LIST, rol);
+	const PROCESS_TODAY = AppointmentReducer(TODAY_LIST, role);
 
 	res.status(200).json(PROCESS_TODAY);
 }
