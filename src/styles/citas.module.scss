@@ -155,6 +155,10 @@
 				opacity: 100%;
 				padding: 10px 0;
 
+				&:disabled {
+					opacity: 60%;
+				}
+
 				.appointment-info {
 					display: flex;
 					justify-content: space-between;

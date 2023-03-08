@@ -53,7 +53,7 @@ export const BusyTimeBTN = (props: BusyAppointmentProps) => {
 
 const fetcher = (arg: any) => fetch(arg).then((res) => res.json());
 
-const AdminBtn = ({ time, stateStyles, session, user_id }: adminProps) => {
+const AdminBtn = ({ time, stateStyles, session, user_id, availableTime }: adminProps) => {
 	const [showData, setShowData] = useState(false);
 	const { data, isLoading, error } = useSWR(`/api/getUser/${user_id}`, fetcher);
 
@@ -75,7 +75,8 @@ const AdminBtn = ({ time, stateStyles, session, user_id }: adminProps) => {
 	};
 
 	return (
-		<div
+		<button
+			disabled={availableTime}
 			className={`${styles["appointment-btn"]} ${styles["reserved-appointment"]} ${styles.admin}`}
 		>
 			<div className={styles["appointment-info"]} onClick={handleShow}>
@@ -103,17 +104,17 @@ const AdminBtn = ({ time, stateStyles, session, user_id }: adminProps) => {
 							>
 								{data?.exists.phone}
 							</a>
-							<button
+							<span
 								className={`${indexStyles["btn-action"]} ${indexStyles.warn} ${indexStyles.small}`}
 								onClick={handleDropAppointment}
 							>
 								Cancelar reserva
-							</button>
+							</span>
 						</div>
 					</>
 				)}
 			</div>
-		</div>
+		</button>
 	);
 };
 
