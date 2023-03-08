@@ -6,7 +6,9 @@ import { AppointmentReducer } from "@common/appointmentReducer";
 import { LAYOUT_DAY, DATE_APOINTMENTS, DATE_CLOSED_TIME } from "@ddbb/prisma.queries";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const role: "admin" | "user" | undefined = JSON.parse(req.body).role;
+	let role: "admin" | "user" | undefined = undefined;
+
+	if (req.body !== "") role = JSON.parse(req.body).role;
 
 	const OP_LAYOUT = await LAYOUT_DAY(TODAY_CUSTOM_EN);
 
