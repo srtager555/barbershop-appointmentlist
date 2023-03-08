@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Prata } from "@next/font/google";
+import { Prata, Noto_Sans_Display } from "@next/font/google";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 
@@ -18,6 +18,7 @@ interface ComponentsList {
 }
 
 const prata = Prata({ preload: true, weight: "400", subsets: ["latin"] });
+const Noto = Noto_Sans_Display({ preload: true, weight: "400", subsets: ["latin"] });
 
 const fetcher = (url: string) => fetch(url).then((data) => data.json());
 
@@ -31,6 +32,7 @@ export function Navbar() {
 	const [showTitle, setShowTitle] = useState(true);
 	const [scrollDirection, setScrollDirection] = useState(true);
 	const [lastScrollPosition, setLastScrollPosition] = useState(0);
+	const [showProfileLink, setShowProfileLink] = useState(false);
 
 	const handleTitleChecker = () => {
 		if (window.scrollY <= 0) setShowTitle(true);
@@ -61,6 +63,14 @@ export function Navbar() {
 	}, [lastScrollPosition]);
 
 	useEffect(() => {
+		const path = router.asPath;
+		const bannedPaths = ["/perfil", "/login", "/registrar"];
+
+		if (bannedPaths.some((el) => el === path)) setShowProfileLink(false);
+		else setShowProfileLink(true);
+	}, [router.asPath]);
+
+	useEffect(() => {
 		const content: Array<ComponentsList> = [
 			{
 				path: ["/citas", "/citas/despues"],
@@ -87,20 +97,15 @@ export function Navbar() {
 
 	return (
 		<>
-			{status === "authenticated" ? (
-				<Link
-					className={`${prata.className} ${indexStyles["btn-action"]} ${
-						indexStyles.profile
-					} ${styles["profile-link"]} ${
-						router.asPath === "/perfil" ? styles.hidden : ""
-					}`}
-					href="/perfil"
-				>
-					P
-				</Link>
-			) : (
-				""
-			)}
+			<Link
+				className={`${Noto.className} ${indexStyles["btn-action"]} ${indexStyles.profile} ${
+					styles["profile-link"]
+				} ${!showProfileLink ? styles.hidden : ""}`}
+				href="/perfil"
+			>
+				{status === "authenticated" ? session.user.name[0] : "iniciar sesión"}
+			</Link>
+
 			<nav className={`${prata.className} ${styles.container} ${customClass}`}>
 				<Link href="/citas">
 					<Logo />

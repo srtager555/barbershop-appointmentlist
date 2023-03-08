@@ -18,6 +18,13 @@
 
 	&.profile {
 		padding: 12px 19px;
+		font-size: 0.8rem;
+		border-radius: 10px;
+		padding: 10px 15px;
+		overflow: hidden;
+		color: #fff;
+		background-color: var(--custom-black);
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 	}
 
 	&.warn {

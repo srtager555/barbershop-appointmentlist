@@ -1,16 +1,18 @@
 .profile-link {
 	position: fixed;
-	top: 1%;
+	bottom: 1%;
 	right: 15px;
 	display: inline-block;
 	z-index: 100;
 	transition: 1s;
+	// Looks the index scss in the .profile style
 
 	&.hidden {
 		opacity: 0;
 		visibility: hidden;
 	}
 }
+
 .container {
 	position: fixed;
 	top: 3%;
