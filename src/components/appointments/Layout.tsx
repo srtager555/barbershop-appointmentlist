@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useSession } from "next-auth/react";
 
 import { Appointments } from "./Appointments";
 import styles from "@styles/citas.module.scss";
@@ -11,6 +12,7 @@ interface LayoutProps {
 
 const Layout = ({ data, opening }: LayoutProps) => {
 	const btnContainer = useRef<HTMLDivElement>(document.createElement("div"));
+	const { data: session, status } = useSession();
 
 	const [dataToPrint, setDataToPrint] = useState<appointmentData[] | "closed">(data);
 	const [firstTimeToScroll, setFirstTimeToScroll] = useState(true);
@@ -18,16 +20,18 @@ const Layout = ({ data, opening }: LayoutProps) => {
 	const handlerUpgradedAppointList = useCallback(async () => {
 		const PATH = opening ? "tomorrow" : "hoy";
 		const URL = `/api/appointments/${PATH}`;
-		const OPTIONS_TOMORROW = {
+		const OPTIONS = {
 			method: "POST",
-			body: JSON.stringify({ date: opening?.en }),
+			body: JSON.stringify({
+				date: opening?.en,
+				rol: status === "authenticated" ? session.user.role : undefined,
+			}),
 		};
-		const OPTIONS = opening ? OPTIONS_TOMORROW : undefined;
 
 		const DATA = await fetch(URL, OPTIONS).then((data) => data.json());
 
 		if (JSON.stringify(dataToPrint) != JSON.stringify(DATA)) setDataToPrint(DATA);
-	}, [opening, dataToPrint]);
+	}, [opening, dataToPrint, session, status]);
 
 	// I added an interval to listener the ddbb to check if is there new appointments
 	useEffect(() => {
