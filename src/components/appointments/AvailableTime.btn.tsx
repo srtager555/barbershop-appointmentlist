@@ -47,6 +47,7 @@ export const AvailableTimeBTN = ({ time, stateStyles, date, callback }: appointm
 		<button
 			onClick={() => handlerCloseAndOpenAnAppointment(date, time)}
 			className={`${styles["appointment-btn"]}`}
+			disabled={availableTime}
 		>
 			<span className={styles.time}>{time}</span>
 			<span className={styles.line}></span>
