@@ -30,7 +30,6 @@ export const Appointments = ({ dataToPrint, opening, UpgradedAppointList }: Appo
 		<>
 			{dataToPrint.map((appointment, index) => {
 				const KEY = `${index} - ${appointment.time}`;
-				const LAST_APPOINTMENT = index === dataToPrint.length - 1;
 
 				const PROPS = {
 					index,
