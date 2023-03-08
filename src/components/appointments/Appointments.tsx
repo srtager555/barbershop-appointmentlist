@@ -56,8 +56,6 @@ export const Appointments = ({ dataToPrint, opening, UpgradedAppointList }: Appo
 						);
 				}
 
-				console.log(LAST_APPOINTMENT);
-
 				if (appointment.state === "close")
 					return (
 						<div className={styles["appointment-btn__container"]} key={KEY}>
