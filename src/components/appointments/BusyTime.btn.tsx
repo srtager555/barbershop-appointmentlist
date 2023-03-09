@@ -60,7 +60,6 @@ const fetcher = (arg: any) => fetch(arg).then((res) => res.json());
 
 const AdminBtn = ({ time, stateStyles, user_id, availableTime }: adminProps) => {
 	const { data, isLoading, error } = useSWR(`/api/getUser/${user_id}`, fetcher);
-	const { phone, name }: DAtaFetchingBusyButtonAdmin = data;
 
 	const [showData, setShowData] = useState(false);
 	const [phoneNumber, setPhoneNumber] = useState("");
@@ -83,9 +82,10 @@ const AdminBtn = ({ time, stateStyles, user_id, availableTime }: adminProps) => 
 	};
 
 	useEffect(() => {
-		if (phone[0] != "+") setPhoneNumber(`+504${phone}`);
-		else setPhoneNumber(phone);
-	}, [phone]);
+		if (data)
+			if (data.phone[0] != "+") setPhoneNumber(`+504${data.phone}`);
+			else setPhoneNumber(data.phone);
+	}, [data]);
 
 	return (
 		<button
@@ -110,7 +110,7 @@ const AdminBtn = ({ time, stateStyles, user_id, availableTime }: adminProps) => 
 					<>
 						<div className={styles.imageContainer}></div>
 						<div className={styles["container--data"]}>
-							<p className={styles["user--name"]}>{name}</p>
+							<p className={styles["user--name"]}>{data.name}</p>
 							<a href={`tel://${phoneNumber}`} className={styles["user--phone"]}>
 								{phoneNumber}
 							</a>
