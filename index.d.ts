@@ -22,6 +22,11 @@ interface appointmentData {
 	user_id: user_id;
 }
 
+interface rawAppointmentData extends appointmentData {
+	isOpening: boolean;
+	isClosing: boolean;
+}
+
 interface appointmentsButtons {
 	time: Time;
 	stateStyles: string;
