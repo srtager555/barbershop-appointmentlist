@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		});
 
 		if (exists) {
-			res.status(200).json({ exists });
+			res.status(200).json({ phone: exists.phone, name: exists.name });
 		}
 	} else {
 		res.status(500).json("No se encontro un usuario");
