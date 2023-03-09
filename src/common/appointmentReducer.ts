@@ -4,13 +4,14 @@
  * @returns {appointmentData[]} Will return the appointment array without the first closed times
  */
 export function AppointmentReducer(
-	data: Array<appointmentData>,
+	data: Array<rawAppointmentData>,
 	rol: "admin" | "user" | undefined
 ): appointmentData[] | "closed" {
-	const OpeningTime = data.find((el) => el.state === "open" || el.state === "busy");
+	const OpeningTime = data.find((el) => el.isOpening === true);
 	let OpeningTimeIndex: number;
-	let lastClosedTimeIndex: number;
+	let ClosingTimeIndex: number;
 	let ArrayClosedTime: appointmentData[] = [];
+	let DATA_process: appointmentData[];
 
 	// here will remove the first hour closed and the last hours closed
 	if (OpeningTime) {
@@ -18,23 +19,32 @@ export function AppointmentReducer(
 		data = data.splice(OpeningTimeIndex);
 	}
 
-	const ClosingTime = data.reverse().find((el) => el.state === "open");
+	const ClosingTime = data.find((el) => el.isClosing === true);
 
 	if (ClosingTime) {
-		lastClosedTimeIndex = data.indexOf(ClosingTime);
-		data = data.splice(lastClosedTimeIndex - 1).reverse();
+		ClosingTimeIndex = data.indexOf(ClosingTime);
+		data.splice(ClosingTimeIndex + 1);
 	}
 
-	data.forEach((element) => {
+	DATA_process = data.map((el) => {
+		return {
+			id: el.id,
+			time: el.time,
+			state: el.state,
+			user_id: el.user_id,
+		};
+	});
+
+	DATA_process.forEach((element) => {
 		const CLOSED_STATE = ["open", "busy"].every((el) => element.state != el);
 
 		if (rol != "admin") {
 			if (ArrayClosedTime.length > 0) {
 				if (CLOSED_STATE) return ArrayClosedTime.push(element);
 
-				const startClosedTime = data.indexOf(ArrayClosedTime[0]);
+				const startClosedTime = DATA_process.indexOf(ArrayClosedTime[0]);
 
-				data.splice(startClosedTime, ArrayClosedTime.length, {
+				DATA_process.splice(startClosedTime, ArrayClosedTime.length, {
 					id: ArrayClosedTime[0].id,
 					time:
 						ArrayClosedTime.length === 1
@@ -51,5 +61,5 @@ export function AppointmentReducer(
 		}
 	});
 
-	return data.every((el) => el.state === "close") ? "closed" : data;
+	return DATA_process.every((el) => el.state === "close") ? "closed" : DATA_process;
 }
