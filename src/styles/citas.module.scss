@@ -22,7 +22,7 @@
 		pointer-events: none;
 	}
 
-	&.user {
+	&.profile {
 		padding-top: 10px;
 
 		&::after {
@@ -54,6 +54,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		flex-direction: column;
 		width: 100%;
 		margin-bottom: 35px;
 
@@ -64,6 +65,10 @@
 				width: 110%;
 				padding-bottom: 50px;
 			}
+		}
+
+		&.profile {
+			margin-bottom: 35px;
 		}
 
 		.appointment-btn {

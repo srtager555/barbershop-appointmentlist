@@ -49,8 +49,10 @@ const Profile: NextPage = () => {
 			{session?.user.role === "admin" && (
 				<small className={styles.message}>Eres administrador</small>
 			)}
-			<div className={`${stylesCitas["container-appointments"]} ${stylesCitas.user}`}>
-				<div className={stylesCitas["appointment-btn__container"]}>
+			<div className={`${stylesCitas["container-appointments"]} ${stylesCitas.profile}`}>
+				<div
+					className={`${stylesCitas["appointment-btn__container"]} ${stylesCitas.profile}`}
+				>
 					{appointment?.data ? (
 						<>
 							{!appointment?.expire ? (
@@ -65,7 +67,7 @@ const Profile: NextPage = () => {
 							/>
 						</>
 					) : (
-						<p>¡Aun no has hecho tu primer reserva!</p>
+						<p>¡Aun no has hecho una reserva!</p>
 					)}
 				</div>
 			</div>
