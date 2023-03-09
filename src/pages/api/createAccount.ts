@@ -2,8 +2,14 @@ import { Prisma } from "@ddbb/prismadb";
 import { NextApiRequest, NextApiResponse } from "next";
 import { hash } from "bcrypt";
 
+interface createProps {
+	name: string;
+	phone: string;
+	password: string;
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { name, phone, password } = req.body;
+	const { name, phone, password }: createProps = req.body;
 
 	const exists = await Prisma.users.findUnique({
 		where: {
