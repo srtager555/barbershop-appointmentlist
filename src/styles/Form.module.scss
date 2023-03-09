@@ -2,9 +2,7 @@
 	width: 90%;
 	height: 100vh;
 	margin: 0 auto;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	padding-top: 50px;
 
 	.title {
 		text-align: center;
@@ -33,6 +31,10 @@
 			border-bottom: 1px solid var(--custom-black);
 			margin-bottom: 75px;
 
+			&.extraMargin {
+				margin-bottom: 100px;
+			}
+
 			.name {
 				position: absolute;
 				top: 50%;
@@ -42,6 +44,15 @@
 				transition: 400ms;
 				z-index: 9;
 				pointer-events: none;
+			}
+
+			.info {
+				position: absolute;
+				display: block;
+				bottom: -10%;
+				left: 0;
+				transform: translateY(100%);
+				text-align: center;
 			}
 
 			.input {

@@ -4,6 +4,10 @@ import Link from "next/link";
 import styles from "@styles/Form.module.scss";
 import indexStyles from "@styles/index.module.scss";
 
+import { Noto_Sans_Display } from "@next/font/google";
+
+const Noto = Noto_Sans_Display({ weight: "400", style: "italic", subsets: ["latin"] });
+
 const Form = ({ type, callback }: { type: "login" | "regis"; callback: Function }) => (
 	<div className={`${styles.container}`}>
 		<p className={styles.title}>
@@ -40,9 +44,14 @@ const Form = ({ type, callback }: { type: "login" | "regis"; callback: Function 
 					</div>
 				</>
 			)}
-			<div className={styles.inputContainer}>
+			<div className={`${styles.inputContainer} ${styles.extraMargin}`}>
 				<input className={styles.input} id="phone" name="phone" type="text" required />
 				<span className={styles.name}>Tu número</span>
+				{type === "regis" && (
+					<small className={`${Noto.className} ${styles.info}`}>
+						¡Si tienes un número extranjero agrega su código (ejemplo: +50487562147)!
+					</small>
+				)}
 			</div>
 			<div className={styles.inputContainer}>
 				<input
