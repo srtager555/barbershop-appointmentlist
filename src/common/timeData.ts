@@ -30,7 +30,15 @@ export const monthsEnglish = [
 	"December",
 ];
 
-export const TODAY = new Date();
+const d = new Date();
+const localTime = d.getTime();
+const localOffset = d.getTimezoneOffset() * 60000;
+
+const utc = localTime + localOffset;
+const offset = -6; // UTC of Honduras is -6
+const honduras = utc + 3600000 * offset;
+
+export const TODAY = new Date(honduras);
 
 // example: December 15 2023
 export const TODAY_CUSTOM = `${months[TODAY.getMonth()]} ${TODAY.getDate()} ${TODAY.getFullYear()}`;
