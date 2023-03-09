@@ -99,7 +99,7 @@ const AdminBtn = ({ time, stateStyles, session, user_id, availableTime }: adminP
 						<div className={styles["container--data"]}>
 							<p className={styles["user--name"]}>{data?.exists.name}</p>
 							<a
-								href={`tel://${session.user.phone}`}
+								href={`tel://${data?.exists.phone}`}
 								className={styles["user--phone"]}
 							>
 								{data?.exists.phone}
