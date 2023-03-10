@@ -1,7 +1,7 @@
 namespace NodeJS {
 	interface ProcessEnv {
 		URL: string;
-		SUPABASE_URL: string;
-		SUPABASE_KEY: string;
+		NEXT_PUBLIC_SUPABASE_URL: string;
+		NEXT_PUBLIC_SUPABASE_KEY: string;
 	}
 }
