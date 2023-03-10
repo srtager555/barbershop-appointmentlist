@@ -16,7 +16,7 @@ export const handlerCloseAccount = (user_id: user_id) => {
 	}).then(async (data) => {
 		if (!data.isConfirmed) return;
 
-		await fetch("/api/appointments/dropAccount", {
+		await fetch("/api/user/dropAccount", {
 			method: "POST",
 			body: JSON.stringify({ user_id }),
 		}).then((data) => {
