@@ -17,6 +17,7 @@ import stylesCitas from "@styles/citas.module.scss";
 import indexStyles from "@styles/index.module.scss";
 import styles from "@styles/Perfil.module.scss";
 import { handlerUploadUserAvatar } from "@utils/uploadUserImage";
+import { supabase } from "@ddbb/supabase.client";
 
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
@@ -26,36 +27,66 @@ const Profile: NextPage = () => {
 	const stateStylesItalic = `${notoI.className} ${stylesCitas.state}`;
 	const { data: session, status } = useSession();
 	const [appointment, setAppointment] = useState<{ data: rawAppointments; expire: boolean }>();
+	const [imageURL, setImageURL] = useState("");
 
 	useEffect(() => {
-		const hasAppointment = async () =>
+		if (!session) return;
+
+		const UserData = async () => {
+			if (session.user.image != null) {
+				const { data, error } = await supabase.storage
+					.from("user-image")
+					.createSignedUrl(session.user.image, 60);
+
+				data && setImageURL(data.signedUrl);
+			}
+
 			await fetch("/api/appointments/userAppointment", {
 				method: "POST",
 				body: JSON.stringify({
-					user_id: session?.user.id,
+					user_id: session.user.id,
 				}),
 			}).then(async (data) => {
 				setAppointment(await data.json());
 			});
+		};
 
-		if (session?.user.id) hasAppointment();
+		UserData();
 	}, [session]);
 
 	if (status === "loading") return <Loader />;
 
-	if (status === "unauthenticated") router.push("/login");
+	if (status === "unauthenticated" || !session) {
+		router.push("/login");
+		return <></>;
+	}
 
 	return (
 		<div className={styles.container}>
-			<div>
-				<input ref={imageInputRef} type="file" accept="image/png, image/jpeg, image/gif" />
-				<button onClick={() => handlerUploadUserAvatar(imageInputRef, session)}>
-					testing
-				</button>
-			</div>
-			<h1>{session?.user.name}</h1>
-			<p className={styles.number}>{session?.user.phone}</p>
-			{session?.user.role === "admin" && (
+			{session.user.image != "" ? (
+				<div className={styles.ImageContainer}>
+					<Image
+						src={imageURL}
+						width="100"
+						height="100"
+						alt={`${session.user.name} - avatar`}
+					/>
+				</div>
+			) : (
+				<div>
+					<input
+						ref={imageInputRef}
+						type="file"
+						accept="image/png, image/jpeg, image/gif"
+					/>
+					<button onClick={() => handlerUploadUserAvatar(imageInputRef, session)}>
+						testing
+					</button>
+				</div>
+			)}
+			<h1>{session.user.name}</h1>
+			<p className={styles.number}>{session.user.phone}</p>
+			{session.user.role === "admin" && (
 				<small className={styles.message}>Eres administrador</small>
 			)}
 			<div className={`${stylesCitas["container-appointments"]} ${stylesCitas.profile}`}>
@@ -90,7 +121,7 @@ const Profile: NextPage = () => {
 				{session ? (
 					<button
 						className={`${indexStyles["btn-action"]} ${indexStyles.warn}`}
-						onClick={() => handlerCloseAccount(session?.user.id)}
+						onClick={() => handlerCloseAccount(session.user.id)}
 					>
 						Cerrar cuenta
 					</button>
