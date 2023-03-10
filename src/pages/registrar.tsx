@@ -15,7 +15,7 @@ const Registrar: NextPage = () => {
 		const phone = e.currentTarget.phone.value;
 		const password = e.currentTarget.password.value;
 
-		await fetch("/api/createAccount", {
+		await fetch("/api/user/createAccount", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
