@@ -1,5 +1,6 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 
+import { useRef } from "react";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -15,14 +16,16 @@ import Link from "next/link";
 import stylesCitas from "@styles/citas.module.scss";
 import indexStyles from "@styles/index.module.scss";
 import styles from "@styles/Perfil.module.scss";
+import { handlerUploadUserAvatar } from "@utils/uploadUserImage";
 
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
 const Profile: NextPage = () => {
-	const { data: session, status } = useSession();
+	const imageInputRef = useRef<HTMLInputElement>(null);
 	const router = useRouter();
-	const [appointment, setAppointment] = useState<{ data: rawAppointments; expire: boolean }>();
 	const stateStylesItalic = `${notoI.className} ${stylesCitas.state}`;
+	const { data: session, status } = useSession();
+	const [appointment, setAppointment] = useState<{ data: rawAppointments; expire: boolean }>();
 
 	useEffect(() => {
 		const hasAppointment = async () =>
@@ -44,6 +47,12 @@ const Profile: NextPage = () => {
 
 	return (
 		<div className={styles.container}>
+			<div>
+				<input ref={imageInputRef} type="file" accept="image/png, image/jpeg, image/gif" />
+				<button onClick={() => handlerUploadUserAvatar(imageInputRef, session)}>
+					testing
+				</button>
+			</div>
 			<h1>{session?.user.name}</h1>
 			<p className={styles.number}>{session?.user.phone}</p>
 			{session?.user.role === "admin" && (
