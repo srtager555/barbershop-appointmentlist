@@ -59,7 +59,7 @@ export const BusyTimeBTN = (props: BusyAppointmentProps) => {
 const fetcher = (arg: any) => fetch(arg).then((res) => res.json());
 
 const AdminBtn = ({ time, stateStyles, user_id, availableTime }: adminProps) => {
-	const { data, isLoading, error } = useSWR(`/api/getUser/${user_id}`, fetcher);
+	const { data, isLoading, error } = useSWR(`/api/user/${user_id}`, fetcher);
 
 	const [showData, setShowData] = useState(false);
 	const [phoneNumber, setPhoneNumber] = useState("");
