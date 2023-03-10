@@ -16,7 +16,7 @@ model users {
   phone    String @unique
   password String
   role     String @default("user")
-  image    Bytes? @db.ByteA
+  image    String @db.Text
 }
 
 model layout_day {
