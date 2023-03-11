@@ -1,31 +1,28 @@
-import { Noto_Sans_Display as m } from "@next/font/google";
-
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 
 import { Loader } from "@common/Loader";
-import { UserTimeBTN } from "@components/appointments/UserTime.btn";
 import { handlerCloseAccount } from "@warns/dropAccount";
 import { handlerSignOut } from "@warns/signOut";
 import { supabase } from "@ddbb/supabase.client";
 
 import Link from "next/link";
 
-import stylesCitas from "@styles/citas.module.scss";
 import indexStyles from "@styles/index.module.scss";
 import styles from "@styles/Perfil.module.scss";
 import { UserImage } from "./UserImage";
-
-const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
+import { UserAppointment } from "./UserAppointment";
 
 const Profile: NextPage = () => {
 	const imageInputRef = useRef<HTMLInputElement>(null);
 	const router = useRouter();
-	const stateStylesItalic = `${notoI.className} ${stylesCitas.state}`;
 	const { data: session, status } = useSession();
-	const [appointment, setAppointment] = useState<{ data: rawAppointments; expire: boolean }>();
+	const [appointment, setAppointment] = useState<{
+		data: rawAppointments | undefined | null;
+		expire: boolean | undefined;
+	}>({ data: undefined, expire: undefined });
 	const [imageURL, setImageURL] = useState("");
 
 	function handlerChangeUserImage() {}
@@ -87,30 +84,9 @@ const Profile: NextPage = () => {
 			{session.user.role === "admin" && (
 				<small className={styles.message}>Eres administrador</small>
 			)}
-			<div className={`${stylesCitas["container-appointments"]} ${stylesCitas.profile}`}>
-				<div
-					className={`${stylesCitas["appointment-btn__container"]} ${stylesCitas.profile}`}
-				>
-					{appointment?.data ? (
-						<>
-							{!appointment?.expire ? (
-								<p>Esta es tu reserva, ¡será pronto!</p>
-							) : (
-								<p>¡Ya paso, se vencio tu reserva!</p>
-							)}
-							<UserTimeBTN
-								time={appointment.data.time}
-								stateStyles={stateStylesItalic}
-								date={appointment.data.date}
-							/>
-						</>
-					) : (
-						<p>¡Aun no has hecho una reserva!</p>
-					)}
-				</div>
-			</div>
+			<UserAppointment appointment={appointment} />
 			<Link href="/citas">
-				{!appointment?.expire ? "Regresar a las reservas" : "Regresar a inicio a reservar"}
+				{appointment.expire ? "Regresar a las reservas" : "Regresar a inicio a reservar"}
 			</Link>
 			<div className={styles["btn-container"]}>
 				<button className={indexStyles["btn-action"]} onClick={handlerSignOut}>
