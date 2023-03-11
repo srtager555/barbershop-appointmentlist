@@ -1,23 +1,22 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 
-import { useRef } from "react";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { Loader } from "@common/Loader";
 import { UserTimeBTN } from "@components/appointments/UserTime.btn";
 import { handlerCloseAccount } from "@warns/dropAccount";
 import { handlerSignOut } from "@warns/signOut";
+import { handlerUploadUserAvatar } from "@utils/uploadUserImage";
+import { supabase } from "@ddbb/supabase.client";
 import Image from "next/image";
 
 import Link from "next/link";
 import stylesCitas from "@styles/citas.module.scss";
 import indexStyles from "@styles/index.module.scss";
 import styles from "@styles/Perfil.module.scss";
-import { handlerUploadUserAvatar } from "@utils/uploadUserImage";
-import { supabase } from "@ddbb/supabase.client";
 
 const notoI = m({ weight: ["300"], subsets: ["latin"], style: ["italic"] });
 
@@ -28,6 +27,9 @@ const Profile: NextPage = () => {
 	const { data: session, status } = useSession();
 	const [appointment, setAppointment] = useState<{ data: rawAppointments; expire: boolean }>();
 	const [imageURL, setImageURL] = useState("");
+	const [newImage, setNewImage] = useState(false);
+
+	function handlerChangeUserImage() {}
 
 	useEffect(() => {
 		if (!session) return;
@@ -71,18 +73,52 @@ const Profile: NextPage = () => {
 						height="100"
 						alt={`${session.user.name} - avatar`}
 					/>
+					<div className={styles["container--changeImage"]}>
+						<span className={`${notoI.className} ${styles.title}`}>Cambiar</span>
+						<input
+							type="file"
+							className={styles.changeImage}
+							accept="image/png, image/jpeg, image/jpg, image/gif"
+						/>
+					</div>
 				</div>
 			) : (
-				<div>
-					<input
-						ref={imageInputRef}
-						type="file"
-						accept="image/png, image/jpeg, image/gif"
-					/>
-					<button onClick={() => handlerUploadUserAvatar(imageInputRef, session)}>
-						testing
-					</button>
-				</div>
+				<>
+					<div className={styles["ImageContainer"]}>
+						{imageURL != "" ? (
+							<Image
+								src={imageURL}
+								width="100"
+								height="100"
+								alt={`${session.user.name} - avatar`}
+							/>
+						) : (
+							<div className={styles["fake--image"]}></div>
+						)}
+					</div>
+					<div className={styles["image_options--upload"]}>
+						<h4 className={`${notoI.className} ${styles["upload--title"]}`}>
+							Sube tu foto de perfil
+						</h4>
+						<div className={styles.options}>
+							<div className={styles["input--container"]}>
+								<span className={styles.text}>Buscar imagen</span>
+								<input
+									ref={imageInputRef}
+									type="file"
+									accept="image/png, image/jpeg, image/jpg, image/gif"
+								/>
+							</div>
+							<button
+								disabled={imageURL === ""}
+								className={`${notoI.className} ${indexStyles["btn-action"]} ${indexStyles["under-line"]}`}
+								onClick={() => handlerUploadUserAvatar(imageInputRef, session)}
+							>
+								Subir
+							</button>
+						</div>
+					</div>
+				</>
 			)}
 			<h1>{session.user.name}</h1>
 			<p className={styles.number}>{session.user.phone}</p>
