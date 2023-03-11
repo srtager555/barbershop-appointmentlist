@@ -6,14 +6,14 @@ import { useEffect, useState, useRef } from "react";
 import { Loader } from "@common/Loader";
 import { handlerCloseAccount } from "@warns/dropAccount";
 import { handlerSignOut } from "@warns/signOut";
+import { UserImage } from "./UserImage";
+import { UserAppointment } from "./UserAppointment";
 import { supabase } from "@ddbb/supabase.client";
 
 import Link from "next/link";
 
 import indexStyles from "@styles/index.module.scss";
 import styles from "@styles/Perfil.module.scss";
-import { UserImage } from "./UserImage";
-import { UserAppointment } from "./UserAppointment";
 
 const Profile: NextPage = () => {
 	const imageInputRef = useRef<HTMLInputElement>(null);
@@ -24,12 +24,13 @@ const Profile: NextPage = () => {
 		expire: boolean | undefined;
 	}>({ data: undefined, expire: undefined });
 	const [imageURL, setImageURL] = useState("");
+	const [newImage, setNewImage] = useState("");
 
 	function handlerChangeUserImage() {}
 
 	// get the user data(image and appointment)
 	useEffect(() => {
-		if (!session) return;
+		if (!session || newImage != "") return;
 
 		const UserData = async () => {
 			// fetch image url
@@ -53,7 +54,7 @@ const Profile: NextPage = () => {
 		};
 
 		UserData();
-	}, [session]);
+	}, [session, newImage]);
 
 	useEffect(() => {
 		const IMAGE = imageInputRef.current?.files;
@@ -67,7 +68,7 @@ const Profile: NextPage = () => {
 
 		if (!IMAGE || IMAGE.length === 0) return;
 		READER.readAsDataURL(IMAGE[0]);
-	}, [imageInputRef.current?.files]);
+	}, [newImage]);
 
 	if (status === "loading") return <Loader />;
 
@@ -78,7 +79,13 @@ const Profile: NextPage = () => {
 
 	return (
 		<div className={styles.container}>
-			<UserImage session={session} imageURL={imageURL} imageInputRef={imageInputRef} />
+			<UserImage
+				session={session}
+				imageURL={imageURL}
+				newImage={newImage}
+				setNewImage={setNewImage}
+				imageInputRef={imageInputRef}
+			/>
 			<h1>{session.user.name}</h1>
 			<p className={styles.number}>{session.user.phone}</p>
 			{session.user.role === "admin" && (
