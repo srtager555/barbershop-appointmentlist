@@ -7,7 +7,7 @@ export default async function UserAppointment(req: NextApiRequest, res: NextApiR
 
 	if (user_id) {
 		const appointment: rawAppointments | null | undefined =
-			await Prisma?.appointments.findUnique({
+			await Prisma.appointments.findUnique({
 				where: {
 					user_id,
 				},
