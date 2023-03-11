@@ -12,8 +12,8 @@ import { handlerSignOut } from "@warns/signOut";
 import { handlerUploadUserAvatar } from "@utils/uploadUserImage";
 import { supabase } from "@ddbb/supabase.client";
 import Image from "next/image";
-
 import Link from "next/link";
+
 import stylesCitas from "@styles/citas.module.scss";
 import indexStyles from "@styles/index.module.scss";
 import styles from "@styles/Perfil.module.scss";
@@ -27,15 +27,16 @@ const Profile: NextPage = () => {
 	const { data: session, status } = useSession();
 	const [appointment, setAppointment] = useState<{ data: rawAppointments; expire: boolean }>();
 	const [imageURL, setImageURL] = useState("");
-	const [newImage, setNewImage] = useState(false);
 
 	function handlerChangeUserImage() {}
 
+	// get the user data(image and appointment)
 	useEffect(() => {
 		if (!session) return;
 
 		const UserData = async () => {
-			if (session.user.image != null) {
+			// fetch image url
+			if (typeof session.user.image === "string" && session.user.image !== "") {
 				const { data, error } = await supabase.storage
 					.from("user-image")
 					.createSignedUrl(session.user.image, 60);
@@ -43,6 +44,7 @@ const Profile: NextPage = () => {
 				data && setImageURL(data.signedUrl);
 			}
 
+			// fetch current appointment
 			await fetch("/api/appointments/userAppointment", {
 				method: "POST",
 				body: JSON.stringify({
@@ -55,6 +57,20 @@ const Profile: NextPage = () => {
 
 		UserData();
 	}, [session]);
+
+	useEffect(() => {
+		const IMAGE = imageInputRef.current?.files;
+		const READER = new FileReader();
+
+		READER.onloadend = function () {
+			if (typeof READER.result === "string") {
+				setImageURL(READER.result);
+			} else console.log(READER.result);
+		};
+
+		if (!IMAGE || IMAGE.length === 0) return;
+		READER.readAsDataURL(IMAGE[0]);
+	}, [imageInputRef.current?.files]);
 
 	if (status === "loading") return <Loader />;
 
@@ -69,8 +85,8 @@ const Profile: NextPage = () => {
 				<div className={styles.ImageContainer}>
 					<Image
 						src={imageURL}
-						width="100"
-						height="100"
+						width="150"
+						height="150"
 						alt={`${session.user.name} - avatar`}
 					/>
 					<div className={styles["container--changeImage"]}>
@@ -88,8 +104,8 @@ const Profile: NextPage = () => {
 						{imageURL != "" ? (
 							<Image
 								src={imageURL}
-								width="100"
-								height="100"
+								width="150"
+								height="150"
 								alt={`${session.user.name} - avatar`}
 							/>
 						) : (
