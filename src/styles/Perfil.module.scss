@@ -1,8 +1,4 @@
 .container {
-	// display: flex;
-	// justify-content: space-around;
-	// align-items: center;
-	// flex-direction: column;
 	width: 100%;
 	height: 100vh;
 	max-width: 485px;
@@ -45,5 +41,101 @@
 	.message {
 		display: block;
 		text-align: center;
+	}
+
+	.ImageContainer {
+		position: relative;
+		width: 100px;
+		height: 100px;
+		margin: 0 auto;
+		overflow: hidden;
+		border-radius: 50%;
+		transition: 100ms ease-in-out;
+		margin-bottom: 10px;
+
+		.fake--image {
+			width: 100px;
+			height: 100px;
+			background-color: #ddd;
+		}
+
+		.container--changeImage {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+
+			.title {
+				display: block;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				color: #fff;
+				width: 100px;
+				height: 25px;
+				font-size: 0.8rem;
+				text-align: center;
+				background-color: var(--custom-black);
+				pointer-events: none;
+				cursor: pointer;
+			}
+
+			.changeImage {
+				width: 100px;
+				height: 100px;
+				cursor: pointer;
+				opacity: 0;
+			}
+		}
+	}
+
+	.image_options--upload {
+		width: 80%;
+		margin: 0 auto;
+		margin-bottom: 30px;
+		border-bottom: 1px solid #000;
+
+		.upload--title {
+			text-align: center;
+			margin-bottom: 10px;
+		}
+
+		.options {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.input--container {
+				display: inline-flex;
+				justify-content: center;
+				align-items: center;
+				position: relative;
+				width: 150px;
+				height: 40px;
+				background-color: var(--custom-black);
+				border-radius: 10px;
+				overflow: hidden;
+				transition: 200ms ease-in;
+
+				&:active {
+					transform: scale(0.9);
+				}
+
+				.text {
+					color: #fff;
+					pointer-events: none;
+					cursor: pointer;
+				}
+
+				input {
+					position: absolute;
+					top: 0%;
+					left: 0%;
+					width: 100%;
+					height: 100%;
+					opacity: 0;
+					cursor: pointer;
+				}
+			}
+		}
 	}
 }
