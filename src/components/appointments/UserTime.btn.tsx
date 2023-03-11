@@ -5,7 +5,7 @@ import { VALITD_TIME_LISTENER } from "src/utils/expiredAppointmentChecker";
 import Swal from "sweetalert2";
 import styles from "@styles/citas.module.scss";
 
-export const UserTimeBTN = ({ time, stateStyles, callback, date }: appointmentsButtons) => {
+export const UserTimeBTN = ({ time, stateStyles, callback, date, expire }: appointmentsButtons) => {
 	const { data: session } = useSession();
 	const [availableTime, setAvailableTime] = useState(false);
 
@@ -47,7 +47,7 @@ export const UserTimeBTN = ({ time, stateStyles, callback, date }: appointmentsB
 		<button
 			onClick={handlerDropAppointment}
 			className={`${styles["appointment-btn"]} ${styles.user}`}
-			disabled={availableTime}
+			disabled={expire ? expire : availableTime}
 		>
 			<span className={styles.time}>{time}</span>
 			<span className={styles.line}></span>
