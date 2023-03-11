@@ -1,8 +1,10 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 import { RefObject } from "react";
 import { Session } from "next-auth/core/types";
+import { useState } from "react";
 
 import { handlerUploadUserAvatar } from "@utils/uploadUserImage";
+import { handlerUpdateUserImage } from "@utils/updateUserImage";
 
 import Image from "next/image";
 
@@ -15,21 +17,72 @@ interface UserImageProps {
 	session: Session;
 	imageURL: string;
 	imageInputRef: RefObject<HTMLInputElement>;
+	setNewImage: any;
+	newImage: string;
 }
 
-export function UserImage({ session, imageURL, imageInputRef }: UserImageProps) {
+export function UserImage({
+	session,
+	imageURL,
+	imageInputRef,
+	setNewImage,
+	newImage,
+}: UserImageProps) {
+	const handlerSetNewImage = () => {
+		const IMAGE = imageInputRef.current?.files;
+
+		if (!IMAGE) return;
+
+		setNewImage(IMAGE[0].name);
+	};
+
 	return session.user.image != "" ? (
-		<div className={styles.ImageContainer}>
-			<Image src={imageURL} width="150" height="150" alt={`${session.user.name} - avatar`} />
-			<div className={styles["container--changeImage"]}>
-				<span className={`${notoI.className} ${styles.title}`}>Cambiar</span>
-				<input
-					type="file"
-					className={styles.changeImage}
-					accept="image/png, image/jpeg, image/jpg, image/gif"
-				/>
+		<>
+			<div className={styles.ImageContainer}>
+				{newImage === "" ? (
+					<Image
+						src={imageURL}
+						width="150"
+						height="150"
+						alt={`${session.user.name} - avatar`}
+					/>
+				) : (
+					// eslint-disable-next-line @next/next/no-img-element
+					<img src={imageURL} width="150" height="150" alt="" />
+				)}
+				<div className={styles["container--changeImage"]}>
+					{newImage === "" && (
+						<span className={`${notoI.className} ${styles.title}`}>Cambiar</span>
+					)}
+					<input
+						ref={imageInputRef}
+						type="file"
+						className={styles.changeImage}
+						accept="image/png, image/jpeg, image/jpg, image/gif"
+						onChange={handlerSetNewImage}
+					/>
+				</div>
 			</div>
-		</div>
+			{newImage !== "" && (
+				<div className={styles["options--container"]}>
+					<button
+						className={`${indexStyles["btn-action"]} ${indexStyles["under-line"]}`}
+						onClick={() => {
+							handlerUpdateUserImage({ session, imageInputRef });
+							setNewImage("");
+						}}
+					>
+						Utilazar imagen
+					</button>
+					<button
+						className={`${indexStyles["btn-action"]} ${indexStyles["under-line"]}`}
+						onClick={() => setNewImage("")}
+					>
+						Cancelar
+					</button>
+				</div>
+			)}
+		</>
 	) : (
 		<>
 			<div className={styles["ImageContainer"]}>
