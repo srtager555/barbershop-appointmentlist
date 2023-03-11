@@ -16,6 +16,10 @@
 		background-color: #ccc;
 	}
 
+	&:disabled {
+		opacity: 0.5;
+	}
+
 	&.profile {
 		padding: 12px 19px;
 		font-size: 0.8rem;
@@ -36,5 +40,9 @@
 	&.small {
 		font-size: 0.9rem;
 		padding: 10px 5px;
+	}
+
+	&.under-line {
+		text-decoration: underline;
 	}
 }
