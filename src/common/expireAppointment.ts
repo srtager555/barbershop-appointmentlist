@@ -4,12 +4,7 @@ import { TIME_LIST } from "@common/timeData";
 export function isExpiretAppointment(element: rawAppointments | undefined | null) {
 	if (!element) return undefined;
 
-	// changed the month language to english
-	const DATE_DATA = element.date.split(" ");
-	const MONTH_INDEX = months.indexOf(DATE_DATA[0]);
-	const DATE_CHANGED = element.date.replace(DATE_DATA[0], monthsEnglish[MONTH_INDEX]);
-
-	const appointDate = new Date(DATE_CHANGED);
+	const appointDate = new Date(element.date);
 
 	const CONDITIONS = [
 		appointDate.getFullYear() < TODAY.getFullYear(),
