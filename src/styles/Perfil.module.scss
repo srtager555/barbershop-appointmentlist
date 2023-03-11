@@ -45,17 +45,17 @@
 
 	.ImageContainer {
 		position: relative;
-		width: 100px;
-		height: 100px;
+		width: 150px;
+		height: 150px;
 		margin: 0 auto;
 		overflow: hidden;
-		border-radius: 50%;
+		border-radius: 100%;
 		transition: 100ms ease-in-out;
 		margin-bottom: 10px;
 
 		.fake--image {
-			width: 100px;
-			height: 100px;
+			width: 150px;
+			height: 150px;
 			background-color: #ddd;
 		}
 
@@ -70,9 +70,9 @@
 				bottom: 0;
 				left: 0;
 				color: #fff;
-				width: 100px;
-				height: 25px;
-				font-size: 0.8rem;
+				width: 150px;
+				height: 24px;
+				font-size: 0.9rem;
 				text-align: center;
 				background-color: var(--custom-black);
 				pointer-events: none;
