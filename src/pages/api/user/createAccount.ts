@@ -27,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				name,
 				phone,
 				password: hashPassword,
+				image: "",
 			},
 		});
 
