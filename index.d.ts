@@ -31,6 +31,7 @@ interface appointmentsButtons {
 	time: Time;
 	stateStyles: string;
 	date: string;
+	expire?: boolean;
 	callback?: Function;
 }
 
