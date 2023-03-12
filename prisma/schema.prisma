@@ -11,12 +11,12 @@ datasource db {
 }
 
 model users {
-  id       Int    @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   name     String
-  phone    String @unique
+  phone    String  @unique
   password String
-  role     String @default("user")
-  image    String @db.Text
+  role     String  @default("user")
+  image    String? @default("") @db.Text
 }
 
 model layout_day {
