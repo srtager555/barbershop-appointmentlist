@@ -1,7 +1,6 @@
 import { Noto_Sans_Display as m } from "@next/font/google";
 import { RefObject } from "react";
 import { Session } from "next-auth/core/types";
-import { useState } from "react";
 
 import { handlerUploadUserAvatar } from "@utils/uploadUserImage";
 import { handlerUpdateUserImage } from "@utils/updateUserImage";
