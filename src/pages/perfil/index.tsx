@@ -6,8 +6,8 @@ import { useEffect, useState, useRef } from "react";
 import { Loader } from "@common/Loader";
 import { handlerCloseAccount } from "@warns/dropAccount";
 import { handlerSignOut } from "@warns/signOut";
-import { UserImage } from "./_UserImage";
-import { UserAppointment } from "./_UserAppointment";
+import { UserImage } from "@components/UserImage";
+import { UserAppointment } from "@components/UserAppointment";
 import { supabase } from "@ddbb/supabase.client";
 
 import Link from "next/link";
