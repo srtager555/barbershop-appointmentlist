@@ -1,23 +1,26 @@
 import Link from "next/link";
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 
 import styles from "@styles/Home.module.scss";
 import { supabase } from "@ddbb/supabase.client";
 import { useEffect } from "react";
 
-const Home: NextPage = () => {
-	const handlerTesting = async () => {
-		const { data, error } = await supabase.functions.invoke("noti", {
-			body: {
-				name: "Carlos",
-			},
-		});
-
-		return data;
+export const getServerSideProps: GetServerSideProps = async () => {
+	const { data, error } = await supabase.functions.invoke("noti", {
+		body: {
+			name: "Carlos",
+		},
+	});
+	return {
+		props: {
+			data,
+		},
 	};
+};
 
+const Home: NextPage = (data) => {
 	useEffect(() => {
-		console.log(handlerTesting());
+		console.log(data);
 	}, []);
 
 	return (
